@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { useScoreStore } from '../../store/score-store'
 import { createNote } from '../../core/pitch-to-note'
-import { NaturalNote } from '../../types'
+import { Duration, NaturalNote } from '../../types'
 
 interface Props {
   stavePositions: Array<{
@@ -9,6 +9,8 @@ interface Props {
     y: number
     width: number
     noteStartX: number
+    noteEndX: number
+    noteLayouts: Array<{ absoluteX: number; beginX: number; endX: number }>
     topLineY: number
     lineSpacing: number
   }>
@@ -17,9 +19,6 @@ interface Props {
   scale: number
 }
 
-// Treble staff positions from top line downward, including spaces and nearby ledger positions.
-const STAFF_NOTES: NaturalNote[] = ['F', 'E', 'D', 'C', 'B', 'A', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'G', 'F']
-const STAFF_OCTAVES = [5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3]
 const MAX_LEDGER_STEPS_ABOVE = 4
 const MAX_LEDGER_STEPS_BELOW = 10
 const NOTE_END_PADDING = 20
@@ -28,6 +27,94 @@ interface PreviewPosition {
   x: number
   y: number
   ledgerLines: number[]
+}
+
+interface PointerData {
+  measureIndex: number
+  insertIndex: number
+  natural: NaturalNote
+  octave: number
+  previewX: number
+  previewY: number
+  ledgerLines: number[]
+}
+
+const DURATION_ICONS: Record<Duration, string> = {
+  '1': '\uD834\uDD5D',
+  '2': '\uD834\uDD5E',
+  '4': '\u2669',
+  '8': '\u266A',
+  '16': '\u266C',
+  '32': '\uD834\uDD61',
+  '64': '\uD834\uDD62'
+}
+
+const PITCH_SEQUENCE: Array<{ natural: NaturalNote; octave: number }> = [
+  { natural: 'C', octave: 6 },
+  { natural: 'B', octave: 5 },
+  { natural: 'A', octave: 5 },
+  { natural: 'G', octave: 5 },
+  { natural: 'F', octave: 5 },
+  { natural: 'E', octave: 5 },
+  { natural: 'D', octave: 5 },
+  { natural: 'C', octave: 5 },
+  { natural: 'B', octave: 4 },
+  { natural: 'A', octave: 4 },
+  { natural: 'G', octave: 4 },
+  { natural: 'F', octave: 4 },
+  { natural: 'E', octave: 4 },
+  { natural: 'D', octave: 4 },
+  { natural: 'C', octave: 4 },
+  { natural: 'B', octave: 3 },
+  { natural: 'A', octave: 3 },
+  { natural: 'G', octave: 3 },
+  { natural: 'F', octave: 3 }
+] as const
+
+const TOP_LINE_INDEX = 4
+
+function getInsertionPreview(
+  clickX: number,
+  noteStartX: number,
+  noteEndX: number,
+  noteLayouts: Array<{ absoluteX: number; beginX: number; endX: number }>
+): { insertIndex: number; previewX: number } {
+  if (noteLayouts.length === 0) {
+    return {
+      insertIndex: 0,
+      previewX: (noteStartX + noteEndX) / 2
+    }
+  }
+
+  const insertionXs: number[] = []
+  for (let i = 0; i <= noteLayouts.length; i++) {
+    if (i === 0) {
+      insertionXs.push((noteStartX + noteLayouts[0].beginX) / 2)
+      continue
+    }
+
+    if (i === noteLayouts.length) {
+      insertionXs.push((noteLayouts[i - 1].endX + noteEndX) / 2)
+      continue
+    }
+
+    insertionXs.push((noteLayouts[i - 1].endX + noteLayouts[i].beginX) / 2)
+  }
+
+  let closestIndex = 0
+  let closestDistance = Math.abs(clickX - insertionXs[0])
+  for (let i = 1; i < insertionXs.length; i++) {
+    const distance = Math.abs(clickX - insertionXs[i])
+    if (distance < closestDistance) {
+      closestDistance = distance
+      closestIndex = i
+    }
+  }
+
+  return {
+    insertIndex: closestIndex,
+    previewX: insertionXs[closestIndex]
+  }
 }
 
 function getLedgerLines(
@@ -55,7 +142,7 @@ function getLedgerLines(
 /**
  * Transparent overlay that handles click-to-place notes on the staff.
  */
-export function InteractionLayer({ stavePositions, staveWidth, startY, scale }: Props) {
+export function InteractionLayer({ stavePositions, staveWidth, startY: _startY, scale }: Props) {
   const addNote = useScoreStore((s) => s.addNote)
   const setCursor = useScoreStore((s) => s.setCursor)
   const selectedDuration = useScoreStore((s) => s.selectedDuration)
@@ -64,7 +151,7 @@ export function InteractionLayer({ stavePositions, staveWidth, startY, scale }: 
   const [preview, setPreview] = useState<PreviewPosition | null>(null)
 
   const getPointerData = useCallback(
-    (clientX: number, clientY: number, rect: DOMRect) => {
+    (clientX: number, clientY: number, rect: DOMRect): PointerData | null => {
       const clickX = (clientX - rect.left) / scale
       const clickY = (clientY - rect.top) / scale
 
@@ -88,32 +175,33 @@ export function InteractionLayer({ stavePositions, staveWidth, startY, scale }: 
       const measure = measures[measureIndex]
       const noteStep = stavePos.lineSpacing / 2
       const minY = stavePos.topLineY - MAX_LEDGER_STEPS_ABOVE * noteStep
-      const maxY = stavePos.topLineY + (STAFF_NOTES.length - 1 + MAX_LEDGER_STEPS_BELOW) * noteStep
+      const maxY =
+        stavePos.topLineY + (PITCH_SEQUENCE.length - TOP_LINE_INDEX - 1 + MAX_LEDGER_STEPS_BELOW) * noteStep
       const clampedY = Math.max(minY, Math.min(maxY, clickY))
       const relY = clampedY - stavePos.topLineY
-      const pitchIndex = Math.round(relY / noteStep)
-      const clampedIndex = Math.max(0, Math.min(STAFF_NOTES.length - 1, pitchIndex))
-      const noteY = stavePos.topLineY + clampedIndex * noteStep
-
-      const noteAreaStart = stavePos.noteStartX
-      const noteAreaWidth = Math.max(40, stavePos.x + staveWidth - noteAreaStart - NOTE_END_PADDING)
-      const slotCount = Math.max(1, measure.notes.length + 1)
-      const relativeX = Math.max(0, Math.min(noteAreaWidth, clickX - noteAreaStart))
-      const insertIndex = Math.max(
+      const staffRelativeIndex = Math.round(relY / noteStep)
+      const sequenceIndex = Math.max(
         0,
-        Math.min(measure.notes.length, Math.floor((relativeX / noteAreaWidth) * slotCount))
+        Math.min(PITCH_SEQUENCE.length - 1, TOP_LINE_INDEX + staffRelativeIndex)
       )
-      const slotWidth = noteAreaWidth / slotCount
-      const previewX = noteAreaStart + insertIndex * slotWidth + slotWidth / 2
+      const noteY = stavePos.topLineY + (sequenceIndex - TOP_LINE_INDEX) * noteStep
+
+      const clampedX = Math.max(stavePos.noteStartX, Math.min(stavePos.noteEndX, clickX))
+      const { insertIndex } = getInsertionPreview(
+        clampedX,
+        stavePos.noteStartX,
+        stavePos.noteEndX,
+        stavePos.noteLayouts
+      )
 
       return {
         measureIndex,
         insertIndex,
-        natural: STAFF_NOTES[clampedIndex],
-        octave: STAFF_OCTAVES[clampedIndex],
-        previewX,
+        natural: PITCH_SEQUENCE[sequenceIndex].natural,
+        octave: PITCH_SEQUENCE[sequenceIndex].octave,
+        previewX: clampedX,
         previewY: noteY,
-        ledgerLines: getLedgerLines(clampedIndex, stavePos.topLineY, noteStep)
+        ledgerLines: getLedgerLines(sequenceIndex - TOP_LINE_INDEX, stavePos.topLineY, noteStep)
       }
     },
     [measures, scale, stavePositions, staveWidth]
@@ -133,7 +221,7 @@ export function InteractionLayer({ stavePositions, staveWidth, startY, scale }: 
         selectedAccidental,
         selectedDuration
       )
-      addNote(note, pointerData.insertIndex)
+      addNote(note, pointerData.insertIndex, pointerData.measureIndex)
     },
     [getPointerData, selectedDuration, selectedAccidental, addNote, setCursor]
   )
@@ -161,8 +249,8 @@ export function InteractionLayer({ stavePositions, staveWidth, startY, scale }: 
     () =>
       preview
         ? {
-            left: `${preview.x - 8}px`,
-            top: `${preview.y - 6}px`
+            left: `${preview.x}px`,
+            top: `${preview.y}px`
           }
         : null,
     [preview]
@@ -170,11 +258,11 @@ export function InteractionLayer({ stavePositions, staveWidth, startY, scale }: 
 
   return (
     <div
-      className="absolute inset-0 cursor-crosshair"
+      className="absolute inset-0"
       onClick={handleClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setPreview(null)}
-      style={{ zIndex: 10 }}
+      style={{ zIndex: 10, cursor: 'none' }}
     >
       {preview &&
         preview.ledgerLines.map((lineY) => (
@@ -192,16 +280,19 @@ export function InteractionLayer({ stavePositions, staveWidth, startY, scale }: 
         ))}
       {previewStyle && (
         <div
-          className="absolute rounded-full"
+          className="absolute"
           style={{
             ...previewStyle,
-            width: '16px',
-            height: '12px',
-            border: '1.5px solid rgba(59,130,246,0.9)',
-            background: 'rgba(59,130,246,0.18)',
-            pointerEvents: 'none'
+            color: 'rgba(59,130,246,0.9)',
+            fontSize: '30px',
+            lineHeight: 1,
+            opacity: 0.45,
+            pointerEvents: 'none',
+            transform: 'translate(-50%, -60%) scale(1.9)'
           }}
-        />
+        >
+          <div>{DURATION_ICONS[selectedDuration]}</div>
+        </div>
       )}
     </div>
   )

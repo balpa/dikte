@@ -1,0 +1,986 @@
+{
+  "acem": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "acemasiran": [
+    {
+      "natural": "B",
+      "accidental": "kucuk_flat"
+    }
+  ],
+  "acemkurdi": [
+    {
+      "natural": "B",
+      "accidental": "kucuk_flat"
+    }
+  ],
+  "araban": [
+    {
+      "natural": "B",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "E",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "arazbar": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "E",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "arazbarbuselik": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "E",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "bestenigar": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "D",
+      "accidental": "bakiye_flat"
+    }
+  ],
+  "beyati": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "beyatibuselik": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "buzurk": [
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "canfeza": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "D",
+      "accidental": "bakiye_flat"
+    }
+  ],
+  "cargah": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "D",
+      "accidental": "bakiye_flat"
+    }
+  ],
+  "dilkeshaveran": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "dilkeside": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "dilkusa": [
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "dilnisin": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "dugah": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "D",
+      "accidental": "bakiye_flat"
+    }
+  ],
+  "evcara": [
+    {
+      "natural": "A",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "E",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "evic": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "evicbuselik": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "ferahfeza": [
+    {
+      "natural": "B",
+      "accidental": "kucuk_flat"
+    }
+  ],
+  "ferahnak": [
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "ferahnakasiran": [
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "ferahnuma": [
+    {
+      "natural": "B",
+      "accidental": "kucuk_flat"
+    },
+    {
+      "natural": "E",
+      "accidental": "kucuk_flat"
+    }
+  ],
+  "gerdaniye": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "gerdaniyebuselik": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "guldeste": [
+    {
+      "natural": "D",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "kucuk_sharp"
+    }
+  ],
+  "gulizar": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "gulzar": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "hicaz": [
+    {
+      "natural": "B",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "hicazasiran": [
+    {
+      "natural": "B",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "hicazbuselik": [
+    {
+      "natural": "B",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "hicazkar": [
+    {
+      "natural": "A",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "E",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "hisar": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "hisarbuselik": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "huseyni": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "huseyniasiran": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "huzi": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "huzzam": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "E",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "irak": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "isfahan": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "isfahanek": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "karcigar": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "E",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "kucek": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "D",
+      "accidental": "bakiye_flat"
+    }
+  ],
+  "kurdi": [
+    {
+      "natural": "B",
+      "accidental": "kucuk_flat"
+    }
+  ],
+  "kurdilihicazkar": [
+    {
+      "natural": "A",
+      "accidental": "kucuk_flat"
+    },
+    {
+      "natural": "B",
+      "accidental": "kucuk_flat"
+    },
+    {
+      "natural": "E",
+      "accidental": "kucuk_flat"
+    }
+  ],
+  "mahur": [
+    {
+      "natural": "F",
+      "accidental": "kucuk_sharp"
+    }
+  ],
+  "mahurbuselik": [
+    {
+      "natural": "F",
+      "accidental": "kucuk_sharp"
+    }
+  ],
+  "muberka": [
+    {
+      "natural": "B",
+      "accidental": "kucuk_flat"
+    }
+  ],
+  "muhalif": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "muhayyer": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "muhayyerbuselik": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "muhayyerkurdi": [
+    {
+      "natural": "B",
+      "accidental": "kucuk_flat"
+    }
+  ],
+  "muhayyersunbule": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "D",
+      "accidental": "bakiye_flat"
+    }
+  ],
+  "mustear": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "E",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "neva": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "nevabuselik": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "nevruz": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "nihavent": [
+    {
+      "natural": "B",
+      "accidental": "kucuk_flat"
+    },
+    {
+      "natural": "E",
+      "accidental": "kucuk_flat"
+    }
+  ],
+  "nikriz": [
+    {
+      "natural": "B",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "nisabur": [
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "nisaburek": [
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "kucuk_sharp"
+    },
+    {
+      "natural": "G",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "nisabureyn": [
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "nuhuft": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "pencgah": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "pesendide": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "rahatfeza": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "rahatulervah": [
+    {
+      "natural": "B",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "rast": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "rehavi": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "rengidil": [
+    {
+      "natural": "A",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "D",
+      "accidental": "bakiye_flat"
+    }
+  ],
+  "revnaknuma": [
+    {
+      "natural": "A",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "E",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "reyya": [
+    {
+      "natural": "A",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "E",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "ruhnuvaz": [
+    {
+      "natural": "F",
+      "accidental": "kucuk_sharp"
+    }
+  ],
+  "saba": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "D",
+      "accidental": "bakiye_flat"
+    }
+  ],
+  "sabaasiran": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "D",
+      "accidental": "bakiye_flat"
+    }
+  ],
+  "sababuselik": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "D",
+      "accidental": "bakiye_flat"
+    }
+  ],
+  "sazkar": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "sedaraban": [
+    {
+      "natural": "B",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "E",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "segah": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "E",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "sehnaz": [
+    {
+      "natural": "B",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "fazla_sharp"
+    },
+    {
+      "natural": "G",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "selmek": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "serefnuma": [
+    {
+      "natural": "B",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "sevkaver": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "E",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "sevkutarab": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "D",
+      "accidental": "bakiye_flat"
+    }
+  ],
+  "sivenuma": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "D",
+      "accidental": "bakiye_flat"
+    }
+  ],
+  "sultanisegah": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "E",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "sultaniyegah": [
+    {
+      "natural": "B",
+      "accidental": "kucuk_flat"
+    },
+    {
+      "natural": "C",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "suzidil": [
+    {
+      "natural": "D",
+      "accidental": "bakiye_sharp"
+    },
+    {
+      "natural": "F",
+      "accidental": "fazla_sharp"
+    },
+    {
+      "natural": "G",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "suzidilara": [
+    {
+      "natural": "F",
+      "accidental": "kucuk_sharp"
+    }
+  ],
+  "suzinak": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "E",
+      "accidental": "bakiye_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "tahir": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "tahirbuselik": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "ussak": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    }
+  ],
+  "yegah": [
+    {
+      "natural": "B",
+      "accidental": "fazla_flat"
+    },
+    {
+      "natural": "F",
+      "accidental": "bakiye_sharp"
+    }
+  ],
+  "zavil": [
+    {
+      "natural": "F",
+      "accidental": "kucuk_sharp"
+    }
+  ]
+}

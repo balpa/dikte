@@ -19,6 +19,8 @@ export function StaffCanvas() {
       y: number
       width: number
       noteStartX: number
+      noteEndX: number
+      noteLayouts: Array<{ absoluteX: number; beginX: number; endX: number }>
       topLineY: number
       lineSpacing: number
     }>
@@ -33,6 +35,7 @@ export function StaffCanvas() {
   const currentMeasureIndex = useScoreStore((s) => s.currentMeasureIndex)
   const currentNoteIndex = useScoreStore((s) => s.currentNoteIndex)
   const pageZoom = useScoreStore((s) => s.pageZoom)
+  const measureError = useScoreStore((s) => s.measureError)
 
   const normalizedMeasuresPerLine = Math.max(1, measuresPerLine)
   const pageWidth = PAGE_MAX_WIDTH
@@ -67,7 +70,8 @@ export function StaffCanvas() {
       makam,
       normalizedMeasuresPerLine,
       currentMeasureIndex,
-      currentNoteIndex
+      currentNoteIndex,
+      measureError
     )
 
     stavePositionsRef.current = result.stavePositions
@@ -79,6 +83,7 @@ export function StaffCanvas() {
     normalizedMeasuresPerLine,
     pageHeight,
     pageWidth,
+    measureError,
     score,
     staveWidth,
     timeSignature
@@ -102,10 +107,12 @@ export function StaffCanvas() {
   return (
     <div
       ref={wrapperRef}
+      data-testid="staff-canvas"
       className="overflow-auto"
       style={{ minHeight: '300px', width: '100%' }}
     >
       <div
+        data-testid="staff-paper"
         className="relative staff-paper mx-auto"
         style={{
           width: `${scaledWidth}px`,

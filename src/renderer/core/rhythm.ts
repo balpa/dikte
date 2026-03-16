@@ -1,24 +1,34 @@
+import { USUL_OPTIONS, normalizeUsulId } from './music-dataset'
+
 export interface RhythmOption {
   id: string
   label: string
-  timeSignature: [number, number]
+  timeSignature?: [number, number]
 }
 
-export const RHYTHM_OPTIONS: RhythmOption[] = [
-  { id: 'sofyan', label: 'Sofyan', timeSignature: [4, 4] },
-  { id: 'semai', label: 'Semai', timeSignature: [3, 4] },
-  { id: 'turk-aksagi', label: 'Turk Aksagi', timeSignature: [5, 8] },
-  { id: 'yuruk-semai', label: 'Yuruk Semai', timeSignature: [6, 8] },
-  { id: 'devr-i-hindi', label: 'Devr-i Hindi', timeSignature: [7, 8] },
-  { id: 'mucenneb', label: 'Mucenneb', timeSignature: [8, 8] },
-  { id: 'aksak', label: 'Aksak', timeSignature: [9, 8] },
-  { id: 'evfer', label: 'Evfer', timeSignature: [9, 8] },
-  { id: 'curcuna', label: 'Curcuna', timeSignature: [10, 8] },
-  { id: 'devr-i-kebir', label: 'Devr-i Kebir', timeSignature: [28, 4] }
-]
+const KNOWN_TIME_SIGNATURES: Record<string, [number, number]> = {
+  sofyan: [4, 4],
+  semai: [3, 4],
+  turkaksagi: [5, 8],
+  yuruksemai: [6, 8],
+  devrihindi: [7, 8],
+  aksak: [9, 8],
+  evfer: [9, 8],
+  curcuna: [10, 8],
+  devrikebir: [28, 4]
+}
+
+export const RHYTHM_OPTIONS: RhythmOption[] = USUL_OPTIONS.map((usul) => ({
+  id: usul.id,
+  label: usul.label,
+  timeSignature: KNOWN_TIME_SIGNATURES[usul.id]
+}))
 
 export function getRhythmOption(value: string): RhythmOption | undefined {
-  return RHYTHM_OPTIONS.find((option) => option.id === value || option.label === value)
+  const normalized = normalizeUsulId(value)
+  return RHYTHM_OPTIONS.find(
+    (option) => option.id === normalized || option.label.toLowerCase() === value.trim().toLowerCase()
+  )
 }
 
 export function getRhythmLabel(value: string): string {

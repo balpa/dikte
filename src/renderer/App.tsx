@@ -4,8 +4,12 @@ import { StaffCanvas } from './components/staff/StaffCanvas'
 import { Sidebar } from './components/sidebar/Sidebar'
 import { Modal } from './components/common/Modal'
 import { useScoreStore } from './store/score-store'
-import { MAKAMLAR } from './core/makam'
 import { RHYTHM_OPTIONS, getRhythmOption } from './core/rhythm'
+import {
+  MAKAM_OPTIONS,
+  normalizeMakamId,
+  normalizeUsulId
+} from './core/music-dataset'
 
 function HeaderButton({
   label,
@@ -68,8 +72,17 @@ export default function App() {
   const updateScore = useCallback(
     (updates: Partial<typeof score>) => {
       const nextScore = { ...score, ...updates }
+      if (updates.makam !== undefined) {
+        nextScore.makam = normalizeMakamId(updates.makam)
+      }
+      if (updates.rhythm !== undefined) {
+        nextScore.rhythm = normalizeUsulId(updates.rhythm)
+      }
+      if (updates.usul !== undefined) {
+        nextScore.usul = normalizeUsulId(updates.usul)
+      }
       if (updates.rhythm !== undefined && updates.usul === undefined) {
-        nextScore.usul = updates.rhythm
+        nextScore.usul = normalizeUsulId(updates.rhythm)
       }
       setScore(nextScore)
     },
@@ -164,11 +177,41 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [deleteNote, currentMeasureIndex, currentNoteIndex])
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.__DIKTE_TEST__ = {
+        resetScore: () => useScoreStore.getState().newScore(),
+        setMockImportAudioResult: (result) => {
+          ;(window as Window & { __DIKTE_TEST_IMPORT_AUDIO__?: typeof result }).__DIKTE_TEST_IMPORT_AUDIO__ = result
+        },
+        getFlattenedNotes: () =>
+          useScoreStore
+            .getState()
+            .score.measures.flatMap((measure) =>
+              measure.notes.map((note) => ({
+                natural: note.natural,
+                octave: note.octave,
+                accidental: note.accidental,
+                duration: note.duration,
+                isRest: note.isRest
+              }))
+            )
+      }
+    }
+
+    return () => {
+      if (typeof window !== 'undefined') {
+        delete (window as Window & { __DIKTE_TEST_IMPORT_AUDIO__?: unknown }).__DIKTE_TEST_IMPORT_AUDIO__
+        delete window.__DIKTE_TEST__
+      }
+    }
+  }, [])
+
   return (
     <div className="h-screen flex" style={{ background: '#1c1c1e' }}>
       <Sidebar />
 
-      <main className="flex-1 flex flex-col min-w-0">
+      <main className="flex-1 flex flex-col min-w-0" data-testid="app-main">
         <header
           className="min-h-14 flex items-center justify-between px-6 py-2 border-b gap-6"
           style={{ background: '#2c2c2e', borderColor: 'rgba(255,255,255,0.06)' }}
@@ -192,6 +235,7 @@ export default function App() {
               value={score.genre}
               onChange={(e) => updateScore({ genre: e.target.value })}
               placeholder={t('score.genre')}
+              data-testid="genre-input"
               className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-32"
               style={{
                 color: '#f5f5f7',
@@ -205,6 +249,7 @@ export default function App() {
               value={score.title}
               onChange={(e) => updateScore({ title: e.target.value })}
               placeholder={t('score.title')}
+              data-testid="title-input"
               className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-40"
               style={{
                 color: '#f5f5f7',
@@ -218,6 +263,7 @@ export default function App() {
               value={score.subtitle}
               onChange={(e) => updateScore({ subtitle: e.target.value })}
               placeholder={t('score.subtitle')}
+              data-testid="subtitle-input"
               className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-32"
               style={{
                 color: '#f5f5f7',
@@ -271,10 +317,11 @@ export default function App() {
                 const rhythm = getRhythmOption(e.target.value)
                 updateScore({
                   rhythm: e.target.value,
-                  usul: rhythm?.label ?? e.target.value,
+                  usul: rhythm?.id ?? e.target.value,
                   timeSignature: rhythm?.timeSignature ?? score.timeSignature
                 })
               }}
+              data-testid="rhythm-select"
               className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-32 appearance-none"
               style={{
                 color: '#f5f5f7',
@@ -298,6 +345,7 @@ export default function App() {
             <select
               value={score.makam}
               onChange={(e) => updateScore({ makam: e.target.value })}
+              data-testid="makam-select"
               className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-28 appearance-none"
               style={{
                 color: '#f5f5f7',
@@ -305,13 +353,13 @@ export default function App() {
                 border: '1px solid rgba(255,255,255,0.06)'
               }}
             >
-              {MAKAMLAR.map((option) => (
+              {MAKAM_OPTIONS.map((option) => (
                 <option
                   key={option.id}
                   value={option.id}
                   style={{ background: '#2c2c2e', color: '#f5f5f7' }}
                 >
-                  {t(`makam.${option.id}`)}
+                  {option.label}
                 </option>
               ))}
             </select>
@@ -356,6 +404,7 @@ export default function App() {
                 step={10}
                 value={Math.round(pageZoom * 100)}
                 onChange={(e) => setPageZoom((Number(e.target.value) || 100) / 100)}
+                data-testid="zoom-input"
                 className="text-sm bg-transparent outline-none w-16 text-center"
                 style={{ color: '#f5f5f7', caretColor: '#0a84ff' }}
                 aria-label={t('menu.view')}

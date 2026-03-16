@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { MAKAMLAR } from '../../core/makam'
+import { MAKAM_OPTIONS, normalizeMakamId } from '../../core/music-dataset'
 import { useScoreStore } from '../../store/score-store'
 
 export function MakamSelector() {
@@ -9,13 +9,14 @@ export function MakamSelector() {
   const score = useScoreStore((s) => s.score)
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setScore({ ...score, makam: e.target.value })
+    setScore({ ...score, makam: normalizeMakamId(e.target.value) })
   }
 
   return (
     <select
       value={makam}
       onChange={handleChange}
+      data-testid="sidebar-makam-select"
       className="w-full text-xs rounded-lg px-3 py-2.5 outline-none cursor-pointer appearance-none"
       style={{
         background: 'rgba(255,255,255,0.04)',
@@ -23,9 +24,9 @@ export function MakamSelector() {
         border: '1px solid rgba(255,255,255,0.06)',
       }}
     >
-      {MAKAMLAR.map((m) => (
+      {MAKAM_OPTIONS.map((m) => (
         <option key={m.id} value={m.id} style={{ background: '#2c2c2e', color: '#f5f5f7' }}>
-          {t(`makam.${m.id}`)}
+          {m.label}
         </option>
       ))}
     </select>

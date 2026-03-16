@@ -48,6 +48,7 @@ export function komaToDikteNote(
   let bestNatural: NaturalNote = 'C'
   let bestAccidental: AccidentalType = 'none'
   let bestDiff = Infinity
+  let exactMatch: { natural: NaturalNote; accidental: AccidentalType; accidentalDistance: number } | null = null
 
   for (const natural of NATURAL_NOTES) {
     const naturalKoma = NATURAL_KOMA[natural]
@@ -56,17 +57,17 @@ export function komaToDikteNote(
     // Check if any accidental matches this difference
     for (const acc of ACCIDENTALS) {
       if (acc.komaOffset === diff) {
-        // Exact match
-        return {
-          id: generateId(),
-          natural,
-          octave,
-          accidental: acc.type,
-          komaFromC4,
-          duration,
-          dotted,
-          tied: false,
-          isRest: false
+        const accidentalDistance = Math.abs(acc.komaOffset)
+        if (
+          !exactMatch ||
+          accidentalDistance < exactMatch.accidentalDistance ||
+          (accidentalDistance === exactMatch.accidentalDistance && acc.komaOffset === 0)
+        ) {
+          exactMatch = {
+            natural,
+            accidental: acc.type,
+            accidentalDistance
+          }
         }
       }
     }
@@ -75,6 +76,20 @@ export function komaToDikteNote(
     if (Math.abs(diff) < Math.abs(bestDiff)) {
       bestDiff = diff
       bestNatural = natural
+    }
+  }
+
+  if (exactMatch) {
+    return {
+      id: generateId(),
+      natural: exactMatch.natural,
+      octave,
+      accidental: exactMatch.accidental,
+      komaFromC4,
+      duration,
+      dotted,
+      tied: false,
+      isRest: false
     }
   }
 

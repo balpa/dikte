@@ -2,6 +2,12 @@ node_modules
 out
 dist
 plan.txt
+20makam/
+SymbTr/
+tests/
+test-results/
 
 *.tsbuildinfo
 *.pdf
+*.m4a
+*.mp3

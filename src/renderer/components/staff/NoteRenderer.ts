@@ -3,6 +3,7 @@ import { DikteNote, Measure, AccidentalType, Score, NaturalNote } from '../../ty
 import { noteToVexFlowKey } from '../../core/note-names'
 import { getMakamSignature } from '../../core/makam'
 import { getRhythmLabel } from '../../core/rhythm'
+import { getMeasureCapacity, getMeasureUnits } from '../../core/measure-duration'
 
 const TURKISH_GLYPHS = {
   fazlaFlat: '\uE443',
@@ -125,13 +126,16 @@ export function renderMeasures(
   makam: string,
   measuresPerLine: number,
   selectedMeasure: number,
-  selectedNote: number
+  selectedNote: number,
+  measureError: { measureIndex: number; message: string } | null
 ): {
   stavePositions: Array<{
     x: number
     y: number
     width: number
     noteStartX: number
+    noteEndX: number
+    noteLayouts: Array<{ absoluteX: number; beginX: number; endX: number }>
     topLineY: number
     lineSpacing: number
   }>
@@ -141,6 +145,8 @@ export function renderMeasures(
     y: number
     width: number
     noteStartX: number
+    noteEndX: number
+    noteLayouts: Array<{ absoluteX: number; beginX: number; endX: number }>
     topLineY: number
     lineSpacing: number
   }> = []
@@ -154,6 +160,9 @@ export function renderMeasures(
   for (let mi = 0; mi < measures.length; mi++) {
     const measure = measures[mi]
     const isLineStart = mi % measuresPerLine === 0
+    const isOverCapacity = getMeasureUnits(measure) > getMeasureCapacity(timeSignature)
+    const activeError = measureError?.measureIndex === mi ? measureError.message : null
+    const hasError = isOverCapacity || Boolean(activeError)
 
     if (mi > 0 && isLineStart) {
       x = startX
@@ -172,19 +181,31 @@ export function renderMeasures(
       stave.addTimeSignature(`${timeSignature[0]}/${timeSignature[1]}`)
     }
 
+    if (hasError) {
+      stave.setStyle({ strokeStyle: '#dc2626', fillStyle: '#dc2626' })
+    }
+
     stave.setContext(context).draw()
-    stavePositions.push({
+    const noteStartX = stave.getNoteStartX()
+    const noteEndX = x + staveWidth - 20
+    const stavePosition = {
       x,
       y,
       width: staveWidth,
-      noteStartX: stave.getNoteStartX(),
+      noteStartX,
+      noteEndX,
+      noteLayouts: [] as Array<{ absoluteX: number; beginX: number; endX: number }>,
       topLineY: stave.getYForLine(0),
       lineSpacing: stave.getSpacingBetweenLines()
-    })
+    }
+    stavePositions.push(stavePosition)
 
     if (measure.notes.length > 0) {
       const staveNotes = measure.notes.map((note, ni) => {
         const sn = dikteNoteToStaveNote(note)
+        if (hasError) {
+          sn.setStyle({ fillStyle: '#dc2626', strokeStyle: '#dc2626' })
+        }
         // Highlight selected note
         if (mi === selectedMeasure && ni === selectedNote) {
           sn.setStyle({ fillStyle: '#3b82f6', strokeStyle: '#3b82f6' })
@@ -201,7 +222,20 @@ export function renderMeasures(
 
       const formatWidth = Math.max(40, staveWidth - (isLineStart ? 120 : 40))
       new Formatter().joinVoices([voice]).format([voice], formatWidth)
+      stavePosition.noteLayouts = staveNotes.map((staveNote) => ({
+        absoluteX: staveNote.getAbsoluteX(),
+        beginX: staveNote.getNoteHeadBeginX(),
+        endX: staveNote.getNoteHeadEndX()
+      }))
       voice.draw(context, stave)
+    }
+
+    if (hasError) {
+      context.save()
+      context.setFont('Arial', 11, 'bold')
+      context.setFillStyle('#dc2626')
+      context.fillText(activeError ?? 'Olcu kapasitesi asildi', x + 4, y - 10)
+      context.restore()
     }
 
     x += staveWidth + staveGap

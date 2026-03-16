@@ -1,8 +1,15 @@
 import { create } from 'zustand'
 import { DikteNote, Measure, Score, Duration, AccidentalType, DikteFile } from '../types'
+import { canAddNoteToMeasure } from '../core/measure-duration'
+import { normalizeMakamId, normalizeUsulId } from '../core/music-dataset'
 
 interface HistoryEntry {
   measures: Measure[]
+}
+
+interface MeasureError {
+  measureIndex: number
+  message: string
 }
 
 interface ScoreState {
@@ -12,6 +19,7 @@ interface ScoreState {
   selectedDuration: Duration
   selectedAccidental: AccidentalType
   pageZoom: number
+  measureError: MeasureError | null
   filePath: string | null
   isDirty: boolean
 
@@ -22,7 +30,8 @@ interface ScoreState {
   // Actions
   setScore: (score: Score) => void
   newScore: () => void
-  addNote: (note: DikteNote, insertAt?: number) => void
+  addNote: (note: DikteNote, insertAt?: number, measureIndex?: number) => void
+  importNotes: (notes: DikteNote[]) => void
   updateNote: (measureIndex: number, noteIndex: number, note: Partial<DikteNote>) => void
   deleteNote: (measureIndex: number, noteIndex: number) => void
   setCursor: (measureIndex: number, noteIndex: number) => void
@@ -32,6 +41,7 @@ interface ScoreState {
   zoomIn: () => void
   zoomOut: () => void
   resetZoom: () => void
+  clearMeasureError: () => void
   addMeasure: () => void
   setFilePath: (path: string | null) => void
   setDirty: (dirty: boolean) => void
@@ -42,6 +52,12 @@ interface ScoreState {
 }
 
 const DEFAULT_STAFF_LINES = 8
+
+function recommendMeasuresPerLine(noteCount: number): number {
+  if (noteCount >= 40) return 2
+  if (noteCount >= 16) return 3
+  return 4
+}
 
 function createEmptyMeasure(): Measure {
   return {
@@ -96,12 +112,13 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
   selectedDuration: '4',
   selectedAccidental: 'none',
   pageZoom: 1,
+  measureError: null,
   filePath: null,
   isDirty: false,
   history: [{ measures: createDefaultScore().measures }],
   historyIndex: 0,
 
-  setScore: (score) => set({ score, isDirty: true }),
+  setScore: (score) => set({ score, isDirty: true, measureError: null }),
 
   newScore: () => {
     const score = createDefaultScore()
@@ -109,6 +126,7 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
       score,
       currentMeasureIndex: 0,
       currentNoteIndex: 0,
+      measureError: null,
       filePath: null,
       isDirty: false,
       history: [{ measures: JSON.parse(JSON.stringify(score.measures)) }],
@@ -116,16 +134,27 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
     })
   },
 
-  addNote: (note, insertAt) =>
+  addNote: (note, insertAt, measureIndex) =>
     set((state) => {
-      const histUpdate = pushHistory(state)
       const measures = JSON.parse(JSON.stringify(state.score.measures)) as Measure[]
-      const mi = state.currentMeasureIndex
+      const mi = measureIndex ?? state.currentMeasureIndex
 
       // Ensure measure exists
       while (measures.length <= mi) {
         measures.push(createEmptyMeasure())
       }
+
+      if (!canAddNoteToMeasure(measures[mi], note, state.score.timeSignature)) {
+        return {
+          ...state,
+          measureError: {
+            measureIndex: mi,
+            message: 'Bu olcuye daha fazla nota eklenemez'
+          }
+        }
+      }
+
+      const histUpdate = pushHistory(state)
 
       const noteIndex =
         typeof insertAt === 'number'
@@ -137,7 +166,48 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
       return {
         ...histUpdate,
         score: { ...state.score, measures },
-        currentNoteIndex: noteIndex
+        currentNoteIndex: noteIndex,
+        measureError: null
+      }
+    }),
+
+  importNotes: (notes) =>
+    set((state) => {
+      if (notes.length === 0) return state
+
+      const measures = JSON.parse(JSON.stringify(state.score.measures)) as Measure[]
+      let measureIndex = state.currentMeasureIndex
+      let lastNoteIndex = state.currentNoteIndex
+
+      while (measures.length <= measureIndex) {
+        measures.push(createEmptyMeasure())
+      }
+
+      for (const note of notes) {
+        while (!canAddNoteToMeasure(measures[measureIndex], note, state.score.timeSignature)) {
+          measureIndex += 1
+          while (measures.length <= measureIndex) {
+            measures.push(createEmptyMeasure())
+          }
+        }
+
+        measures[measureIndex].notes.push(note)
+        lastNoteIndex = measures[measureIndex].notes.length - 1
+      }
+
+      const usedMeasures = measures.slice(0, measureIndex + 1)
+      const histUpdate = pushHistory(state)
+
+      return {
+        ...histUpdate,
+        score: {
+          ...state.score,
+          measures: usedMeasures,
+          measuresPerLine: recommendMeasuresPerLine(notes.length)
+        },
+        currentMeasureIndex: measureIndex,
+        currentNoteIndex: lastNoteIndex,
+        measureError: null
       }
     }),
 
@@ -150,7 +220,8 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
       }
       return {
         ...histUpdate,
-        score: { ...state.score, measures }
+        score: { ...state.score, measures },
+        measureError: null
       }
     }),
 
@@ -164,7 +235,8 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
       return {
         ...histUpdate,
         score: { ...state.score, measures },
-        currentNoteIndex: Math.max(0, noteIndex - 1)
+        currentNoteIndex: Math.max(0, noteIndex - 1),
+        measureError: null
       }
     }),
 
@@ -177,6 +249,7 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
   zoomIn: () => set((state) => ({ pageZoom: Math.min(2, Number((state.pageZoom + 0.1).toFixed(2))) })),
   zoomOut: () => set((state) => ({ pageZoom: Math.max(0.5, Number((state.pageZoom - 0.1).toFixed(2))) })),
   resetZoom: () => set({ pageZoom: 1 }),
+  clearMeasureError: () => set({ measureError: null }),
 
   addMeasure: () =>
     set((state) => {
@@ -186,7 +259,8 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
         ...histUpdate,
         score: { ...state.score, measures },
         currentMeasureIndex: measures.length - 1,
-        currentNoteIndex: 0
+        currentNoteIndex: 0,
+        measureError: null
       }
     }),
 
@@ -204,7 +278,8 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
           ...state.score,
           measures: JSON.parse(JSON.stringify(entry.measures))
         },
-        isDirty: true
+        isDirty: true,
+        measureError: null
       }
     }),
 
@@ -219,7 +294,8 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
           ...state.score,
           measures: JSON.parse(JSON.stringify(entry.measures))
         },
-        isDirty: true
+        isDirty: true,
+        measureError: null
       }
     }),
 
@@ -240,8 +316,9 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
       subtitle: file.score.subtitle ?? '',
       writer: file.score.writer ?? '',
       source: file.score.source ?? '',
-      rhythm: file.score.rhythm ?? file.score.usul ?? '',
-      usul: file.score.usul ?? file.score.rhythm ?? '',
+      makam: normalizeMakamId(file.score.makam ?? 'rast'),
+      rhythm: normalizeUsulId(file.score.rhythm ?? file.score.usul ?? ''),
+      usul: normalizeUsulId(file.score.usul ?? file.score.rhythm ?? ''),
       measuresPerLine: Math.max(1, Math.min(8, file.score.measuresPerLine ?? 4)),
       measures: file.score.measures?.length
         ? file.score.measures
@@ -253,6 +330,7 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
       score,
       currentMeasureIndex: 0,
       currentNoteIndex: 0,
+      measureError: null,
       isDirty: false,
       history: [{ measures: JSON.parse(JSON.stringify(score.measures)) }],
       historyIndex: 0

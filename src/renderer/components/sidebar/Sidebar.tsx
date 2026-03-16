@@ -11,10 +11,12 @@ import { createRest } from '../../core/pitch-to-note'
 
 function SidebarSection({
   title,
+  testId,
   defaultOpen = true,
   children
 }: {
   title: string
+  testId?: string
   defaultOpen?: boolean
   children: React.ReactNode
 }) {
@@ -23,6 +25,7 @@ function SidebarSection({
   return (
     <div className="border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
       <button
+        data-testid={testId}
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between px-5 py-3 text-xs font-medium tracking-wide transition-colors"
         style={{ color: '#86868b' }}
@@ -84,6 +87,7 @@ export function Sidebar() {
 
   return (
     <aside
+      data-testid="sidebar"
       className="w-64 flex flex-col h-full border-r"
       style={{ background: '#2c2c2e', borderColor: 'rgba(255,255,255,0.06)' }}
     >
@@ -127,6 +131,7 @@ export function Sidebar() {
         <SidebarSection title={t('toolbar.tools')}>
           <div className="grid grid-cols-2 gap-2">
             <button
+              data-testid="add-rest-button"
               style={actionBtnStyle}
               onClick={handleRest}
               onMouseEnter={(e) => {
@@ -142,6 +147,7 @@ export function Sidebar() {
               {t('toolbar.rest')}
             </button>
             <button
+              data-testid="add-measure-button"
               style={actionBtnStyle}
               onClick={addMeasure}
               onMouseEnter={(e) => {
@@ -157,6 +163,7 @@ export function Sidebar() {
               {t('score.addMeasure')}
             </button>
             <button
+              data-testid="undo-button"
               style={actionBtnStyle}
               onClick={undo}
               title="Ctrl+Z"
@@ -175,6 +182,7 @@ export function Sidebar() {
               {t('toolbar.undo')}
             </button>
             <button
+              data-testid="redo-button"
               style={actionBtnStyle}
               onClick={redo}
               title="Ctrl+Shift+Z"
@@ -193,6 +201,7 @@ export function Sidebar() {
               {t('toolbar.redo')}
             </button>
             <button
+              data-testid="delete-note-button"
               className="col-span-2"
               style={{
                 ...actionBtnStyle,
@@ -221,7 +230,11 @@ export function Sidebar() {
           <MicrophonePanel />
         </SidebarSection>
 
-        <SidebarSection title={t('audio.importFile')} defaultOpen={false}>
+        <SidebarSection
+          title={t('audio.importFile')}
+          testId="import-audio-section-toggle"
+          defaultOpen={false}
+        >
           <FileImportPanel />
         </SidebarSection>
       </div>

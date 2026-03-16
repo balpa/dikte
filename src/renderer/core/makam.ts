@@ -1,4 +1,6 @@
 import { AccidentalType, NaturalNote } from '../types'
+import { normalizeMakamId } from './music-dataset'
+import generatedSignatures from '../data/makam-signatures.json'
 
 /**
  * Makam (mode) definitions for Turkish classical music.
@@ -20,7 +22,30 @@ export interface MakamSignatureEntry {
   accidental: AccidentalType
 }
 
+const GENERATED_SIGNATURES = generatedSignatures as Record<string, MakamSignatureEntry[]>
+
 export const MAKAMLAR: MakamDef[] = [
+  {
+    id: 'acemasiran',
+    nameTr: 'Acemasiran',
+    nameEn: 'Acemasiran',
+    intervals: [8, 9, 5, 9, 8, 9, 5],
+    seyir: 'mixed'
+  },
+  {
+    id: 'acemkurdi',
+    nameTr: 'Acemkurdi',
+    nameEn: 'Acemkurdi',
+    intervals: [8, 9, 5, 9, 4, 9, 9],
+    seyir: 'mixed'
+  },
+  {
+    id: 'beyati',
+    nameTr: 'Beyati',
+    nameEn: 'Beyati',
+    intervals: [8, 5, 9, 9, 8, 5, 9],
+    seyir: 'ascending'
+  },
   {
     id: 'rast',
     nameTr: 'Rast',
@@ -94,10 +119,20 @@ export const MAKAMLAR: MakamDef[] = [
 ]
 
 export function getMakam(id: string): MakamDef | undefined {
-  return MAKAMLAR.find((m) => m.id === id)
+  const normalized = normalizeMakamId(id)
+  return MAKAMLAR.find((m) => m.id === normalized)
 }
 
 const MAKAM_SIGNATURES: Record<string, MakamSignatureEntry[]> = {
+  acemasiran: [
+    { natural: 'B', accidental: 'buyuk_flat' }
+  ],
+  acemkurdi: [
+    { natural: 'B', accidental: 'buyuk_flat' }
+  ],
+  beyati: [
+    { natural: 'B', accidental: 'fazla_flat' }
+  ],
   rast: [
     { natural: 'B', accidental: 'fazla_flat' },
     { natural: 'F', accidental: 'bakiye_sharp' }
@@ -138,7 +173,8 @@ const MAKAM_SIGNATURES: Record<string, MakamSignatureEntry[]> = {
 }
 
 export function getMakamSignature(makamId: string): MakamSignatureEntry[] {
-  return MAKAM_SIGNATURES[makamId] ?? []
+  const normalized = normalizeMakamId(makamId)
+  return GENERATED_SIGNATURES[normalized] ?? MAKAM_SIGNATURES[normalized] ?? []
 }
 
 /**

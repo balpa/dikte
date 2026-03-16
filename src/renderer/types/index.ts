@@ -67,5 +67,18 @@ export interface AccidentalDef {
 declare global {
   interface Window {
     api: import('../../preload/index').DikteAPI
+    __DIKTE_TEST__?: {
+      resetScore: () => void
+      setMockImportAudioResult: (
+        result: { filePath: string; buffer: ArrayBuffer | ArrayBufferView } | null
+      ) => void
+      getFlattenedNotes: () => Array<{
+        natural: NaturalNote
+        octave: number
+        accidental: AccidentalType
+        duration: Duration
+        isRest: boolean
+      }>
+    }
   }
 }

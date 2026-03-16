@@ -10,6 +10,7 @@ export function LanguageSwitcher() {
   return (
     <button
       onClick={toggle}
+      data-testid="language-switcher"
       className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150"
       style={{
         background: 'rgba(255,255,255,0.04)',

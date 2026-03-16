@@ -1,0 +1,1139 @@
+{
+  "source": {
+    "symbtrPieces": 2200,
+    "makams": 155,
+    "usuls": 88,
+    "curatedMakams": 3
+  },
+  "makams": [
+    {
+      "id": "hicaz",
+      "count": 157,
+      "curated": false
+    },
+    {
+      "id": "nihavent",
+      "count": 130,
+      "curated": false
+    },
+    {
+      "id": "ussak",
+      "count": 118,
+      "curated": false
+    },
+    {
+      "id": "rast",
+      "count": 109,
+      "curated": false
+    },
+    {
+      "id": "huzzam",
+      "count": 96,
+      "curated": false
+    },
+    {
+      "id": "huseyni",
+      "count": 92,
+      "curated": false
+    },
+    {
+      "id": "segah",
+      "count": 92,
+      "curated": false
+    },
+    {
+      "id": "mahur",
+      "count": 88,
+      "curated": false
+    },
+    {
+      "id": "hicazkar",
+      "count": 79,
+      "curated": false
+    },
+    {
+      "id": "kurdilihicazkar",
+      "count": 70,
+      "curated": false
+    },
+    {
+      "id": "muhayyer",
+      "count": 67,
+      "curated": false
+    },
+    {
+      "id": "saba",
+      "count": 66,
+      "curated": false
+    },
+    {
+      "id": "acemasiran",
+      "count": 63,
+      "curated": true
+    },
+    {
+      "id": "beyati",
+      "count": 62,
+      "curated": true
+    },
+    {
+      "id": "buselik",
+      "count": 57,
+      "curated": false
+    },
+    {
+      "id": "karcigar",
+      "count": 53,
+      "curated": false
+    },
+    {
+      "id": "hicaz_humayun",
+      "count": 38,
+      "curated": false
+    },
+    {
+      "id": "acemkurdi",
+      "count": 37,
+      "curated": true
+    },
+    {
+      "id": "evic",
+      "count": 33,
+      "curated": false
+    },
+    {
+      "id": "muhayyerkurdi",
+      "count": 32,
+      "curated": false
+    },
+    {
+      "id": "tahir",
+      "count": 31,
+      "curated": false
+    },
+    {
+      "id": "gerdaniye",
+      "count": 26,
+      "curated": false
+    },
+    {
+      "id": "nisaburek",
+      "count": 26,
+      "curated": false
+    },
+    {
+      "id": "suzinak_zirgule",
+      "count": 26,
+      "curated": false
+    },
+    {
+      "id": "nikriz",
+      "count": 25,
+      "curated": false
+    },
+    {
+      "id": "sehnaz",
+      "count": 25,
+      "curated": false
+    },
+    {
+      "id": "sultaniyegah",
+      "count": 22,
+      "curated": false
+    },
+    {
+      "id": "yegah",
+      "count": 22,
+      "curated": false
+    },
+    {
+      "id": "neva",
+      "count": 21,
+      "curated": false
+    },
+    {
+      "id": "hisarbuselik",
+      "count": 20,
+      "curated": false
+    },
+    {
+      "id": "isfahan",
+      "count": 20,
+      "curated": false
+    },
+    {
+      "id": "suzidil",
+      "count": 19,
+      "curated": false
+    },
+    {
+      "id": "suzinak",
+      "count": 19,
+      "curated": false
+    },
+    {
+      "id": "ferahfeza",
+      "count": 17,
+      "curated": false
+    },
+    {
+      "id": "sedaraban",
+      "count": 15,
+      "curated": false
+    },
+    {
+      "id": "kurdi",
+      "count": 14,
+      "curated": false
+    },
+    {
+      "id": "bestenigar",
+      "count": 13,
+      "curated": false
+    },
+    {
+      "id": "ferahnak",
+      "count": 12,
+      "curated": false
+    },
+    {
+      "id": "hicaz_uzzal",
+      "count": 12,
+      "curated": false
+    },
+    {
+      "id": "sevkefza",
+      "count": 11,
+      "curated": false
+    },
+    {
+      "id": "evcara",
+      "count": 9,
+      "curated": false
+    },
+    {
+      "id": "zavil",
+      "count": 9,
+      "curated": false
+    },
+    {
+      "id": "neveser",
+      "count": 8,
+      "curated": false
+    },
+    {
+      "id": "sehnazbuselik",
+      "count": 8,
+      "curated": false
+    },
+    {
+      "id": "acem",
+      "count": 7,
+      "curated": false
+    },
+    {
+      "id": "beyati_araban",
+      "count": 7,
+      "curated": false
+    },
+    {
+      "id": "dugah",
+      "count": 7,
+      "curated": false
+    },
+    {
+      "id": "gulizar",
+      "count": 7,
+      "curated": false
+    },
+    {
+      "id": "hicaz_zirgule",
+      "count": 7,
+      "curated": false
+    },
+    {
+      "id": "suzidilara",
+      "count": 7,
+      "curated": false
+    },
+    {
+      "id": "yeni_cargah",
+      "count": 7,
+      "curated": false
+    },
+    {
+      "id": "irak",
+      "count": 6,
+      "curated": false
+    },
+    {
+      "id": "mustear",
+      "count": 6,
+      "curated": false
+    },
+    {
+      "id": "rehavi",
+      "count": 6,
+      "curated": false
+    },
+    {
+      "id": "hisar",
+      "count": 5,
+      "curated": false
+    },
+    {
+      "id": "huseyniasiran",
+      "count": 5,
+      "curated": false
+    },
+    {
+      "id": "arazbar",
+      "count": 4,
+      "curated": false
+    },
+    {
+      "id": "dilkeshaveran",
+      "count": 4,
+      "curated": false
+    },
+    {
+      "id": "ferahnuma",
+      "count": 4,
+      "curated": false
+    },
+    {
+      "id": "nisabur",
+      "count": 4,
+      "curated": false
+    },
+    {
+      "id": "pesendide",
+      "count": 4,
+      "curated": false
+    },
+    {
+      "id": "segah_maye",
+      "count": 4,
+      "curated": false
+    },
+    {
+      "id": "askefza",
+      "count": 3,
+      "curated": false
+    },
+    {
+      "id": "besteisfahan",
+      "count": 3,
+      "curated": false
+    },
+    {
+      "id": "hicazasiran",
+      "count": 3,
+      "curated": false
+    },
+    {
+      "id": "nuhuft",
+      "count": 3,
+      "curated": false
+    },
+    {
+      "id": "pencgah",
+      "count": 3,
+      "curated": false
+    },
+    {
+      "id": "sabazemzeme",
+      "count": 3,
+      "curated": false
+    },
+    {
+      "id": "sazkar",
+      "count": 3,
+      "curated": false
+    },
+    {
+      "id": "sevkutarab",
+      "count": 3,
+      "curated": false
+    },
+    {
+      "id": "tahirbuselik",
+      "count": 3,
+      "curated": false
+    },
+    {
+      "id": "acembuselik",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "arazbarbuselik",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "buselikasiran",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "buzurk",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "canfeza",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "cargah",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "gulzar",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "huzi",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "muhayyersunbule",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "nevabuselik",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "nihavendikebir",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "pencgahizaid",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "rahatulervah",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "ruhnuvaz",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "ruyiirak",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "sevkaver",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "sevkidil",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "tarzinevin",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "zirefkend",
+      "count": 2,
+      "curated": false
+    },
+    {
+      "id": "acemtarab",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "araban",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "asiranmaye",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "asiranzemzeme",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "bahrinazik",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "bendihisar",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "beyati_arabanbuselik",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "beyatibuselik",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "dilkeside",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "dilkusa",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "dilnisin",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "dugah_maye",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "eski_sipihr",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "evchuzi",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "evicbuselik",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "ferahnakasiran",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "gerdaniyebuselik",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "gevest",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "goncairana",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "guldeste",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "gulsen_ivefa",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "hicaz_zemzeme",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "hicazbuselik",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "hicaziussak",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "hicazkarkurdi",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "huseyni_gulizar",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "huzzam_icedid",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "isfahanek",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "kucek",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "kurdi_gerdaniye",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "mahurbuselik",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "maveraunnehr",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "muberka",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "muhalif",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "muhayyerbuselik",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "murekkep_isfahan",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "neva_kurdi",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "nevruz",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "nigar",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "nihavendirumi",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "nisabureyn",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "pencgahiasl",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "peykinesat",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "rahatfeza",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "rasticedid",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "rastmaye",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "rengidil",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "revnaknuma",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "reyya",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "ruyidilara",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "sabaasiran",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "sababuselik",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "selmek",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "serefnuma",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "sevk_icedid",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "sipihr",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "sivenuma",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "sultaniirak",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "sultanisegah",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "tarzicedid",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "vecdidil",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "vechiarazbar",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "vechisehnaz",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "zevkidil",
+      "count": 1,
+      "curated": false
+    },
+    {
+      "id": "zevkitarab",
+      "count": 1,
+      "curated": false
+    }
+  ],
+  "usuls": [
+    {
+      "id": "aksak",
+      "count": 319
+    },
+    {
+      "id": "sofyan",
+      "count": 293
+    },
+    {
+      "id": "duyek",
+      "count": 278
+    },
+    {
+      "id": "aksaksemai",
+      "count": 128
+    },
+    {
+      "id": "curcuna",
+      "count": 111
+    },
+    {
+      "id": "agiraksak",
+      "count": 108
+    },
+    {
+      "id": "semai",
+      "count": 100
+    },
+    {
+      "id": "nimsofyan",
+      "count": 99
+    },
+    {
+      "id": "senginsemai",
+      "count": 72
+    },
+    {
+      "id": "turkaksagi",
+      "count": 64
+    },
+    {
+      "id": "yuruksemai",
+      "count": 62
+    },
+    {
+      "id": "devrihindi",
+      "count": 58
+    },
+    {
+      "id": "yuruksemai_ii",
+      "count": 55
+    },
+    {
+      "id": "kapali_curcuna",
+      "count": 49
+    },
+    {
+      "id": "musemmen",
+      "count": 38
+    },
+    {
+      "id": "devrikebir",
+      "count": 33
+    },
+    {
+      "id": "devrirevanihindi",
+      "count": 25
+    },
+    {
+      "id": "muhammes",
+      "count": 22
+    },
+    {
+      "id": "evfer",
+      "count": 20
+    },
+    {
+      "id": "hafif",
+      "count": 19
+    },
+    {
+      "id": "agirduyek",
+      "count": 15
+    },
+    {
+      "id": "ciftesofyan",
+      "count": 14
+    },
+    {
+      "id": "agir_aksaksemai",
+      "count": 13
+    },
+    {
+      "id": "agirevfer",
+      "count": 13
+    },
+    {
+      "id": "raksaksagi",
+      "count": 12
+    },
+    {
+      "id": "oynak",
+      "count": 11
+    },
+    {
+      "id": "devrituran",
+      "count": 10
+    },
+    {
+      "id": "aydin",
+      "count": 9
+    },
+    {
+      "id": "cenber",
+      "count": 9
+    },
+    {
+      "id": "fahte",
+      "count": 9
+    },
+    {
+      "id": "musemmen_ii",
+      "count": 8
+    },
+    {
+      "id": "zencir",
+      "count": 8
+    },
+    {
+      "id": "agircenber",
+      "count": 7
+    },
+    {
+      "id": "azeriyuruksemai",
+      "count": 6
+    },
+    {
+      "id": "cifteduyek",
+      "count": 6
+    },
+    {
+      "id": "darb",
+      "count": 5
+    },
+    {
+      "id": "darbifetih",
+      "count": 5
+    },
+    {
+      "id": "evsat",
+      "count": 5
+    },
+    {
+      "id": "sarkidevrirevani",
+      "count": 5
+    },
+    {
+      "id": "agirsenginsemai",
+      "count": 3
+    },
+    {
+      "id": "berefsan",
+      "count": 3
+    },
+    {
+      "id": "devrirevan",
+      "count": 3
+    },
+    {
+      "id": "durakevferi",
+      "count": 3
+    },
+    {
+      "id": "ikizaksak",
+      "count": 3
+    },
+    {
+      "id": "lenkfahte",
+      "count": 3
+    },
+    {
+      "id": "aksaksemaievferi",
+      "count": 2
+    },
+    {
+      "id": "bektasidevrirevani",
+      "count": 2
+    },
+    {
+      "id": "devrihindi_ii",
+      "count": 2
+    },
+    {
+      "id": "dolap",
+      "count": 2
+    },
+    {
+      "id": "frenkcin",
+      "count": 2
+    },
+    {
+      "id": "havi",
+      "count": 2
+    },
+    {
+      "id": "iki_bir",
+      "count": 2
+    },
+    {
+      "id": "mevlevievferi",
+      "count": 2
+    },
+    {
+      "id": "murekkepsofyan",
+      "count": 2
+    },
+    {
+      "id": "nimdevir",
+      "count": 2
+    },
+    {
+      "id": "nimevsat",
+      "count": 2
+    },
+    {
+      "id": "nimhafif",
+      "count": 2
+    },
+    {
+      "id": "raksan",
+      "count": 2
+    },
+    {
+      "id": "remel",
+      "count": 2
+    },
+    {
+      "id": "sakil",
+      "count": 2
+    },
+    {
+      "id": "serbest",
+      "count": 2
+    },
+    {
+      "id": "14_4",
+      "count": 1
+    },
+    {
+      "id": "223",
+      "count": 1
+    },
+    {
+      "id": "3334",
+      "count": 1
+    },
+    {
+      "id": "ayindevrirevani",
+      "count": 1
+    },
+    {
+      "id": "bektasiraksani",
+      "count": 1
+    },
+    {
+      "id": "bektasiraksi",
+      "count": 1
+    },
+    {
+      "id": "bulgardarbi",
+      "count": 1
+    },
+    {
+      "id": "cengiharbi",
+      "count": 1
+    },
+    {
+      "id": "darbeyn",
+      "count": 1
+    },
+    {
+      "id": "devriaryan",
+      "count": 1
+    },
+    {
+      "id": "devrisureyya",
+      "count": 1
+    },
+    {
+      "id": "devrisureyyasofyani",
+      "count": 1
+    },
+    {
+      "id": "devrituran_ii",
+      "count": 1
+    },
+    {
+      "id": "fer",
+      "count": 1
+    },
+    {
+      "id": "ferimuhammes",
+      "count": 1
+    },
+    {
+      "id": "firengifer",
+      "count": 1
+    },
+    {
+      "id": "iraksak",
+      "count": 1
+    },
+    {
+      "id": "katikofti",
+      "count": 1
+    },
+    {
+      "id": "muasser",
+      "count": 1
+    },
+    {
+      "id": "murekkepnimsofyan",
+      "count": 1
+    },
+    {
+      "id": "nimberefsan",
+      "count": 1
+    },
+    {
+      "id": "nimsakil",
+      "count": 1
+    },
+    {
+      "id": "raksaksagi_ii",
+      "count": 1
+    },
+    {
+      "id": "tekvurus",
+      "count": 1
+    },
+    {
+      "id": "turkdarbi",
+      "count": 1
+    },
+    {
+      "id": "turkmen",
+      "count": 1
+    },
+    {
+      "id": "yuruksofyan",
+      "count": 1
+    }
+  ]
+}
