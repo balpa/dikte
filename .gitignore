@@ -9,5 +9,6 @@ test-results/
 
 *.tsbuildinfo
 *.pdf
+*.png
 *.m4a
 *.mp3
