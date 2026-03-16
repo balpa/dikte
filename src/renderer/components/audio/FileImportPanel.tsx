@@ -32,19 +32,22 @@ export function FileImportPanel() {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-      <h3 className="text-sm font-semibold text-gray-700 mb-3">{t('audio.importFile')}</h3>
-
+    <div>
       <button
         onClick={handleImport}
         disabled={analyzing}
-        className="w-full py-2 bg-purple-600 text-white rounded font-medium text-sm hover:bg-purple-700 disabled:opacity-50 transition-colors"
+        className="w-full py-2.5 rounded-lg text-xs font-medium transition-all duration-150 disabled:opacity-40"
+        style={{
+          background: 'rgba(255,255,255,0.04)',
+          color: '#a1a1a6',
+          border: '1px solid rgba(255,255,255,0.06)',
+        }}
       >
         {analyzing ? t('audio.analyzing') : t('audio.importFile')}
       </button>
 
       {fileName && !analyzing && (
-        <p className="text-xs text-gray-500 mt-2 truncate">{fileName}</p>
+        <p className="mt-2 truncate" style={{ fontSize: '10px', color: '#48484a' }}>{fileName}</p>
       )}
     </div>
   )

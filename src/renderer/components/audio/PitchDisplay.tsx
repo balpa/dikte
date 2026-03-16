@@ -15,9 +15,9 @@ export function PitchDisplay({ pitch }: Props) {
 
   if (!pitch) {
     return (
-      <div className="text-center text-gray-400 py-4">
-        <div className="text-2xl">—</div>
-        <div className="text-sm">{t('audio.detectedNote')}</div>
+      <div className="text-center py-3">
+        <div className="text-2xl font-light" style={{ color: '#3a3a3c' }}>--</div>
+        <div className="text-xs mt-1" style={{ color: '#48484a' }}>{t('audio.detectedNote')}</div>
       </div>
     )
   }
@@ -30,27 +30,34 @@ export function PitchDisplay({ pitch }: Props) {
     ? (isTr ? accDef.nameTr : accDef.nameEn)
     : ''
 
-  const centsColor = Math.abs(cents) < 5 ? 'text-green-600' : Math.abs(cents) < 10 ? 'text-yellow-600' : 'text-red-500'
+  const centsAbs = Math.abs(cents)
+  const centsColor = centsAbs < 5 ? '#30d158' : centsAbs < 10 ? '#ff9f0a' : '#ff453a'
 
   return (
     <div className="text-center py-2">
-      <div className="text-3xl font-bold">
+      <div className="text-2xl font-bold" style={{ color: '#f5f5f7' }}>
         {noteName}{note.octave}
-        {accLabel && <span className="text-lg ml-1 text-purple-600">{accDef.symbol}</span>}
+        {accLabel && <span className="text-base ml-1" style={{ color: '#ff9f0a' }}>{accDef.symbol}</span>}
       </div>
-      <div className="text-sm text-gray-500 mt-1">
+      <div className="text-xs mt-1" style={{ color: '#636366' }}>
         {pitch.frequency.toFixed(1)} Hz
       </div>
-      <div className={`text-sm font-mono ${centsColor}`}>
+      <div className="text-xs font-mono" style={{ color: centsColor }}>
         {cents > 0 ? '+' : ''}{cents.toFixed(1)} cents
       </div>
-      <div className="w-full max-w-48 mx-auto mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
+      <div
+        className="w-full mt-2 h-1 rounded-full overflow-hidden"
+        style={{ background: 'rgba(255,255,255,0.06)' }}
+      >
         <div
-          className="h-full bg-blue-500 transition-all"
-          style={{ width: `${Math.round(pitch.clarity * 100)}%` }}
+          className="h-full rounded-full transition-all duration-150"
+          style={{
+            width: `${Math.round(pitch.clarity * 100)}%`,
+            background: 'rgba(255, 159, 10, 0.5)',
+          }}
         />
       </div>
-      <div className="text-xs text-gray-400 mt-1">
+      <div className="text-xs mt-1" style={{ color: '#48484a', fontSize: '10px' }}>
         {t('audio.clarity')}: {Math.round(pitch.clarity * 100)}%
       </div>
     </div>

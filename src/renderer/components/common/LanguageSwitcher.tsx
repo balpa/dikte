@@ -10,7 +10,12 @@ export function LanguageSwitcher() {
   return (
     <button
       onClick={toggle}
-      className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded text-sm font-medium transition-colors"
+      className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150"
+      style={{
+        background: 'rgba(255,255,255,0.04)',
+        color: '#86868b',
+        border: '1px solid rgba(255,255,255,0.06)',
+      }}
       title="Switch language / Dil değiştir"
     >
       {i18n.language === 'tr' ? 'EN' : 'TR'}

@@ -21,7 +21,11 @@
     "sixteenth": "Sixteenth",
     "dotted": "Dotted",
     "rest": "Rest",
-    "tie": "Tie"
+    "tie": "Tie",
+    "tools": "Actions",
+    "undo": "Undo",
+    "redo": "Redo",
+    "delete": "Delete"
   },
   "accidentals": {
     "none": "Natural",

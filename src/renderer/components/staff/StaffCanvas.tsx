@@ -21,7 +21,6 @@ export function StaffCanvas() {
     const container = svgRef.current
     if (!container) return
 
-    // Clear previous
     container.innerHTML = ''
 
     const numLines = Math.ceil(measures.length / 3) || 1
@@ -50,8 +49,8 @@ export function StaffCanvas() {
   }, [draw])
 
   return (
-    <div className="relative bg-white rounded-lg shadow-sm border border-gray-200 overflow-auto">
-      <div ref={svgRef} className="min-h-[300px]" />
+    <div className="relative staff-paper overflow-auto" style={{ minHeight: '300px' }}>
+      <div ref={svgRef} style={{ minHeight: '300px' }} />
       <InteractionLayer
         stavePositions={stavePositionsRef.current}
         staveWidth={STAVE_WIDTH}

@@ -21,7 +21,11 @@
     "sixteenth": "Onaltılık",
     "dotted": "Noktalı",
     "rest": "Sus",
-    "tie": "Bağ"
+    "tie": "Bağ",
+    "tools": "İşlemler",
+    "undo": "Geri Al",
+    "redo": "İleri Al",
+    "delete": "Sil"
   },
   "accidentals": {
     "none": "Natürel",

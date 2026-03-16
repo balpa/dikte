@@ -1,11 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StaffCanvas } from './components/staff/StaffCanvas'
-import { Toolbar } from './components/toolbar/Toolbar'
-import { MicrophonePanel } from './components/audio/MicrophonePanel'
-import { FileImportPanel } from './components/audio/FileImportPanel'
-import { LanguageSwitcher } from './components/common/LanguageSwitcher'
-import { MakamSelector } from './components/common/MakamSelector'
+import { Sidebar } from './components/sidebar/Sidebar'
 import { Modal } from './components/common/Modal'
 import { useScoreStore } from './store/score-store'
 
@@ -80,7 +76,6 @@ export default function App() {
     }
   }, [serialize, setFilePath, setDirty])
 
-  // Register menu event handlers
   useEffect(() => {
     const cleanups = [
       window.api.onMenuNew(handleNew),
@@ -94,7 +89,6 @@ export default function App() {
     return () => cleanups.forEach((fn) => fn())
   }, [handleNew, handleOpen, handleSave, handleSaveAs, undo, redo, deleteNote, currentMeasureIndex, currentNoteIndex])
 
-  // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Delete' || e.key === 'Backspace') {
@@ -106,49 +100,53 @@ export default function App() {
   }, [deleteNote, currentMeasureIndex, currentNoteIndex])
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-4 py-2 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <h1 className="text-lg font-bold text-gray-800">Dikte</h1>
-          <input
-            type="text"
-            value={score.title}
-            onChange={(e) => setScore({ ...score, title: e.target.value })}
-            placeholder={t('score.title')}
-            className="text-sm border-b border-transparent hover:border-gray-300 focus:border-blue-500 outline-none px-1 py-0.5"
-          />
-          <input
-            type="text"
-            value={score.composer}
-            onChange={(e) => setScore({ ...score, composer: e.target.value })}
-            placeholder={t('score.composer')}
-            className="text-sm border-b border-transparent hover:border-gray-300 focus:border-blue-500 outline-none px-1 py-0.5"
-          />
-          <MakamSelector />
-        </div>
-        <div className="flex items-center gap-3">
-          {isDirty && <span className="text-xs text-orange-500">*</span>}
-          <LanguageSwitcher />
-        </div>
-      </header>
+    <div className="h-screen flex" style={{ background: '#1c1c1e' }}>
+      {/* Left Sidebar */}
+      <Sidebar />
 
-      {/* Toolbar */}
-      <Toolbar />
+      {/* Main Content */}
+      <main className="flex-1 flex flex-col min-w-0">
+        {/* Top bar */}
+        <header
+          className="h-12 flex items-center justify-between px-6 border-b"
+          style={{ background: '#2c2c2e', borderColor: 'rgba(255,255,255,0.06)' }}
+        >
+          <div className="flex items-center gap-4">
+            <span className="text-xs font-semibold tracking-widest" style={{ color: '#86868b' }}>
+              DIKTE
+            </span>
+            <span style={{ color: 'rgba(255,255,255,0.1)' }}>/</span>
+            <input
+              type="text"
+              value={score.title}
+              onChange={(e) => setScore({ ...score, title: e.target.value })}
+              placeholder={t('score.title')}
+              className="text-sm bg-transparent outline-none w-40"
+              style={{ color: '#f5f5f7', caretColor: '#0a84ff' }}
+            />
+            <span style={{ color: 'rgba(255,255,255,0.08)' }}>|</span>
+            <input
+              type="text"
+              value={score.composer}
+              onChange={(e) => setScore({ ...score, composer: e.target.value })}
+              placeholder={t('score.composer')}
+              className="text-sm bg-transparent outline-none w-36"
+              style={{ color: '#86868b', caretColor: '#0a84ff' }}
+            />
+            {isDirty && (
+              <div className="w-2 h-2 rounded-full" style={{ background: '#ff9f0a' }} />
+            )}
+          </div>
+        </header>
 
-      {/* Main content */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* Staff area */}
-        <main className="flex-1 p-4 overflow-auto">
+        {/* Staff Area */}
+        <div
+          className="flex-1 overflow-auto content-scroll p-8"
+          style={{ background: '#1c1c1e' }}
+        >
           <StaffCanvas />
-        </main>
-
-        {/* Side panel */}
-        <aside className="w-72 border-l border-gray-200 p-4 overflow-y-auto flex flex-col gap-4">
-          <MicrophonePanel />
-          <FileImportPanel />
-        </aside>
-      </div>
+        </div>
+      </main>
 
       {/* Confirm modal */}
       <Modal

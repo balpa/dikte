@@ -38,7 +38,7 @@ Manual entry: click position → createNote(natural, octave, accidental) → sto
 
 - Electron + electron-vite (bundler)
 - React 19 + TypeScript
-- Tailwind CSS 4 (via `@tailwindcss/vite`)
+- Tailwind CSS 4 (via `@tailwindcss/postcss`)
 - VexFlow 5 (SVG notation rendering)
 - pitchy (McLeod pitch detection)
 - Zustand (state management)

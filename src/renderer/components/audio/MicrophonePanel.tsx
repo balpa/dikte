@@ -17,8 +17,8 @@ export function MicrophonePanel() {
   const addNote = useScoreStore((s) => s.addNote)
   const selectedDuration = useScoreStore((s) => s.selectedDuration)
 
-  const STABLE_THRESHOLD = 15 // frames of stable pitch before auto-insert
-  const FREQUENCY_TOLERANCE = 5 // Hz tolerance for "same pitch"
+  const STABLE_THRESHOLD = 15
+  const FREQUENCY_TOLERANCE = 5
 
   const handlePitch = useCallback(
     (result: PitchResult | null) => {
@@ -35,7 +35,7 @@ export function MicrophonePanel() {
         if (prev.count === STABLE_THRESHOLD) {
           const note = hzToDikteNote(result.frequency, selectedDuration)
           if (note) addNote(note)
-          prev.count = 0 // Reset after insert
+          prev.count = 0
         }
       } else {
         stablePitchRef.current = { frequency: result.frequency, count: 1 }
@@ -64,35 +64,35 @@ export function MicrophonePanel() {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-      <h3 className="text-sm font-semibold text-gray-700 mb-3">{t('audio.microphone')}</h3>
-
+    <div>
       <PitchDisplay pitch={pitch} />
 
-      <div className="flex items-center gap-3 mt-3">
+      <div className="flex flex-col gap-2 mt-3">
         <button
           onClick={toggleListening}
-          className={`flex-1 py-2 rounded font-medium text-sm transition-colors ${
-            listening
-              ? 'bg-red-500 text-white hover:bg-red-600'
-              : 'bg-blue-600 text-white hover:bg-blue-700'
-          }`}
+          className="w-full py-2.5 rounded-lg text-xs font-medium transition-all duration-150"
+          style={{
+            background: listening ? 'rgba(255, 69, 58, 0.12)' : 'rgba(255, 159, 10, 0.12)',
+            color: listening ? '#ff453a' : '#ff9f0a',
+            border: `1px solid ${listening ? 'rgba(255, 69, 58, 0.25)' : 'rgba(255, 159, 10, 0.25)'}`,
+          }}
         >
           {listening ? t('audio.stopListening') : t('audio.startListening')}
         </button>
 
-        <label className="flex items-center gap-2 text-sm text-gray-600">
+        <label className="flex items-center gap-2 text-xs cursor-pointer select-none" style={{ color: '#86868b' }}>
           <input
             type="checkbox"
             checked={autoInsert}
             onChange={(e) => setAutoInsert(e.target.checked)}
             className="rounded"
+            style={{ accentColor: '#ff9f0a' }}
           />
           {t('audio.autoInsert')}
         </label>
       </div>
 
-      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+      {error && <p className="text-xs mt-2" style={{ color: '#ff453a' }}>{error}</p>}
     </div>
   )
 }

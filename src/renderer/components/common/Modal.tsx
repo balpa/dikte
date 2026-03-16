@@ -13,19 +13,34 @@ export function Modal({ open, message, onConfirm, onCancel }: Props) {
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl p-6 max-w-sm mx-4">
-        <p className="text-gray-700 mb-4">{message}</p>
+    <div
+      className="fixed inset-0 flex items-center justify-center z-50"
+      style={{ background: 'rgba(0, 0, 0, 0.5)', backdropFilter: 'blur(8px)' }}
+    >
+      <div
+        className="rounded-2xl p-6 max-w-sm mx-4"
+        style={{
+          background: '#2c2c2e',
+          border: '1px solid rgba(255,255,255,0.08)',
+          boxShadow: '0 24px 80px rgba(0, 0, 0, 0.5)',
+        }}
+      >
+        <p className="text-sm mb-5" style={{ color: '#f5f5f7' }}>{message}</p>
         <div className="flex justify-end gap-3">
           <button
             onClick={onCancel}
-            className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded"
+            className="px-4 py-2 text-xs rounded-lg transition-all duration-150"
+            style={{ color: '#86868b' }}
           >
             {t('common.cancel')}
           </button>
           <button
             onClick={onConfirm}
-            className="px-4 py-2 text-sm bg-blue-600 text-white hover:bg-blue-700 rounded"
+            className="px-4 py-2 text-xs font-medium rounded-lg transition-all duration-150"
+            style={{
+              background: '#0a84ff',
+              color: '#fff',
+            }}
           >
             {t('common.confirm')}
           </button>

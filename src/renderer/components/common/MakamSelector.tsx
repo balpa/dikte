@@ -13,19 +13,21 @@ export function MakamSelector() {
   }
 
   return (
-    <div className="flex items-center gap-2">
-      <label className="text-xs text-gray-500">{t('score.makam')}:</label>
-      <select
-        value={makam}
-        onChange={handleChange}
-        className="text-sm border border-gray-300 rounded px-2 py-1 bg-white"
-      >
-        {MAKAMLAR.map((m) => (
-          <option key={m.id} value={m.id}>
-            {t(`makam.${m.id}`)}
-          </option>
-        ))}
-      </select>
-    </div>
+    <select
+      value={makam}
+      onChange={handleChange}
+      className="w-full text-xs rounded-lg px-3 py-2.5 outline-none cursor-pointer appearance-none"
+      style={{
+        background: 'rgba(255,255,255,0.04)',
+        color: '#f5f5f7',
+        border: '1px solid rgba(255,255,255,0.06)',
+      }}
+    >
+      {MAKAMLAR.map((m) => (
+        <option key={m.id} value={m.id} style={{ background: '#2c2c2e', color: '#f5f5f7' }}>
+          {t(`makam.${m.id}`)}
+        </option>
+      ))}
+    </select>
   )
 }

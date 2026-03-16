@@ -16,23 +16,25 @@ export function NoteSelector() {
   const setSelectedDuration = useScoreStore((s) => s.setSelectedDuration)
 
   return (
-    <div className="flex items-center gap-1">
-      <span className="text-xs text-gray-500 mr-1">{t('toolbar.duration')}:</span>
-      {DURATIONS.map((d) => (
-        <button
-          key={d.value}
-          onClick={() => setSelectedDuration(d.value)}
-          className={`w-9 h-9 flex items-center justify-center rounded text-lg transition-colors
-            ${
-              selectedDuration === d.value
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          title={t(d.label)}
-        >
-          {d.icon}
-        </button>
-      ))}
+    <div className="flex items-center gap-1.5">
+      {DURATIONS.map((d) => {
+        const isActive = selectedDuration === d.value
+        return (
+          <button
+            key={d.value}
+            onClick={() => setSelectedDuration(d.value)}
+            className="w-10 h-10 flex items-center justify-center rounded-lg text-lg transition-all duration-150"
+            style={{
+              background: isActive ? 'rgba(255, 159, 10, 0.15)' : 'rgba(255,255,255,0.04)',
+              color: isActive ? '#ff9f0a' : '#a1a1a6',
+              border: `1px solid ${isActive ? 'rgba(255, 159, 10, 0.3)' : 'rgba(255,255,255,0.06)'}`,
+            }}
+            title={t(d.label)}
+          >
+            {d.icon}
+          </button>
+        )
+      })}
     </div>
   )
 }
