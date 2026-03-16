@@ -1,0 +1,87 @@
+{
+  "app": {
+    "title": "Dikte",
+    "subtitle": "Turkish Classical Music Note Dictation"
+  },
+  "menu": {
+    "file": "File",
+    "new": "New",
+    "open": "Open",
+    "save": "Save",
+    "saveAs": "Save As",
+    "importAudio": "Import Audio"
+  },
+  "toolbar": {
+    "duration": "Duration",
+    "accidental": "Accidental",
+    "whole": "Whole",
+    "half": "Half",
+    "quarter": "Quarter",
+    "eighth": "Eighth",
+    "sixteenth": "Sixteenth",
+    "dotted": "Dotted",
+    "rest": "Rest",
+    "tie": "Tie"
+  },
+  "accidentals": {
+    "none": "Natural",
+    "fazla_sharp": "Fazla Sharp (+1)",
+    "bakiye_sharp": "Bakiye Sharp (+4)",
+    "kucuk_sharp": "Kücük Müc. Sharp (+5)",
+    "buyuk_sharp": "Büyük Müc. Sharp (+8)",
+    "tanini_sharp": "Tanini Sharp (+9)",
+    "fazla_flat": "Fazla Flat (-1)",
+    "bakiye_flat": "Bakiye Flat (-4)",
+    "kucuk_flat": "Kücük Müc. Flat (-5)",
+    "buyuk_flat": "Büyük Müc. Flat (-8)",
+    "tanini_flat": "Tanini Flat (-9)"
+  },
+  "notes": {
+    "C": "C",
+    "D": "D",
+    "E": "E",
+    "F": "F",
+    "G": "G",
+    "A": "A",
+    "B": "B"
+  },
+  "audio": {
+    "microphone": "Microphone",
+    "startListening": "Start Listening",
+    "stopListening": "Stop Listening",
+    "importFile": "Import Audio File",
+    "analyzing": "Analyzing...",
+    "clarity": "Clarity",
+    "frequency": "Frequency",
+    "detectedNote": "Detected Note",
+    "autoInsert": "Auto Insert",
+    "noMicAccess": "Could not access microphone"
+  },
+  "score": {
+    "title": "Title",
+    "composer": "Composer",
+    "makam": "Makam",
+    "usul": "Usul",
+    "tempo": "Tempo",
+    "measure": "Measure",
+    "addMeasure": "Add Measure"
+  },
+  "makam": {
+    "rast": "Rast",
+    "ussak": "Uşşak",
+    "hicaz": "Hicaz",
+    "segah": "Segâh",
+    "huseyni": "Hüseyni",
+    "kurdilihicazkar": "Kürdilihicazkâr",
+    "nihavend": "Nihavend",
+    "buselik": "Buselik",
+    "karcigar": "Karcığar",
+    "saba": "Sabâ"
+  },
+  "common": {
+    "language": "Language",
+    "unsavedChanges": "You have unsaved changes. Do you want to continue?",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  }
+}

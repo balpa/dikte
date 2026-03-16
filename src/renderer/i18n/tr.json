@@ -1,0 +1,87 @@
+{
+  "app": {
+    "title": "Dikte",
+    "subtitle": "Türk Klasik Müziği Nota Dikte"
+  },
+  "menu": {
+    "file": "Dosya",
+    "new": "Yeni",
+    "open": "Aç",
+    "save": "Kaydet",
+    "saveAs": "Farklı Kaydet",
+    "importAudio": "Ses Dosyası İçe Aktar"
+  },
+  "toolbar": {
+    "duration": "Nota Süresi",
+    "accidental": "Değiştirici İşaret",
+    "whole": "Birlik",
+    "half": "İkilik",
+    "quarter": "Dörtlük",
+    "eighth": "Sekizlik",
+    "sixteenth": "Onaltılık",
+    "dotted": "Noktalı",
+    "rest": "Sus",
+    "tie": "Bağ"
+  },
+  "accidentals": {
+    "none": "Natürel",
+    "fazla_sharp": "Fazla Diyez (+1)",
+    "bakiye_sharp": "Bakiye Diyez (+4)",
+    "kucuk_sharp": "Küçük Müc. Diyez (+5)",
+    "buyuk_sharp": "Büyük Müc. Diyez (+8)",
+    "tanini_sharp": "Tanini Diyez (+9)",
+    "fazla_flat": "Fazla Bemol (-1)",
+    "bakiye_flat": "Bakiye Bemol (-4)",
+    "kucuk_flat": "Küçük Müc. Bemol (-5)",
+    "buyuk_flat": "Büyük Müc. Bemol (-8)",
+    "tanini_flat": "Tanini Bemol (-9)"
+  },
+  "notes": {
+    "C": "Do",
+    "D": "Re",
+    "E": "Mi",
+    "F": "Fa",
+    "G": "Sol",
+    "A": "La",
+    "B": "Si"
+  },
+  "audio": {
+    "microphone": "Mikrofon",
+    "startListening": "Dinlemeye Başla",
+    "stopListening": "Dinlemeyi Durdur",
+    "importFile": "Ses Dosyası İçe Aktar",
+    "analyzing": "Analiz ediliyor...",
+    "clarity": "Netlik",
+    "frequency": "Frekans",
+    "detectedNote": "Algılanan Nota",
+    "autoInsert": "Otomatik Ekle",
+    "noMicAccess": "Mikrofon erişimi verilemedi"
+  },
+  "score": {
+    "title": "Eser Adı",
+    "composer": "Besteci",
+    "makam": "Makam",
+    "usul": "Usûl",
+    "tempo": "Tempo",
+    "measure": "Ölçü",
+    "addMeasure": "Ölçü Ekle"
+  },
+  "makam": {
+    "rast": "Rast",
+    "ussak": "Uşşak",
+    "hicaz": "Hicaz",
+    "segah": "Segâh",
+    "huseyni": "Hüseyni",
+    "kurdilihicazkar": "Kürdilihicazkâr",
+    "nihavend": "Nihavend",
+    "buselik": "Buselik",
+    "karcigar": "Karcığar",
+    "saba": "Sabâ"
+  },
+  "common": {
+    "language": "Dil",
+    "unsavedChanges": "Kaydedilmemiş değişiklikler var. Devam etmek istiyor musunuz?",
+    "confirm": "Onayla",
+    "cancel": "İptal"
+  }
+}
