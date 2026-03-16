@@ -1,6 +1,39 @@
-import { Stave, StaveNote, Dot, Formatter, Voice, Accidental } from 'vexflow'
-import { DikteNote, Measure, AccidentalType } from '../../types'
+import { Stave, StaveNote, Dot, Formatter, Voice, Accidental, KeySignature } from 'vexflow'
+import { DikteNote, Measure, AccidentalType, Score, NaturalNote } from '../../types'
 import { noteToVexFlowKey } from '../../core/note-names'
+import { getMakamSignature } from '../../core/makam'
+import { getRhythmLabel } from '../../core/rhythm'
+
+const TURKISH_GLYPHS = {
+  fazlaFlat: '\uE443',
+  bakiyeSharp: '\uE445',
+  kucukFlat: '\uE441'
+} as const
+
+class CustomKeySignature extends KeySignature {
+  constructor(private readonly customAccidentals: Array<{ type: string; line: number }>) {
+    super('C')
+  }
+
+  override format() {
+    let stave = this.getStave()
+    if (!stave) {
+      stave = new Stave(0, 0, 100)
+      this.setStave(stave)
+    }
+
+    this.width = 0
+    this.children = []
+    this.accList = this.customAccidentals.map((entry) => ({ ...entry }))
+
+    for (let i = 0; i < this.accList.length; i++) {
+      this.convertToGlyph(this.accList[i], this.accList[i + 1], stave)
+    }
+
+    this.calculateDimensions()
+    this.formatted = true
+  }
+}
 
 /**
  * Map Turkish accidental types to VexFlow accidental codes.
@@ -11,14 +44,14 @@ import { noteToVexFlowKey } from '../../core/note-names'
 function accidentalToVexFlow(type: AccidentalType): string | null {
   switch (type) {
     case 'none': return null
-    case 'fazla_sharp': return '+' // quarter-tone-ish sharp
-    case 'bakiye_sharp': return '+'
+    case 'fazla_sharp': return '+'
+    case 'bakiye_sharp': return TURKISH_GLYPHS.bakiyeSharp
     case 'kucuk_sharp': return '+'
     case 'buyuk_sharp': return '#'
     case 'tanini_sharp': return '##'
-    case 'fazla_flat': return 'db' // quarter-tone-ish flat
-    case 'bakiye_flat': return 'db'
-    case 'kucuk_flat': return 'db'
+    case 'fazla_flat': return TURKISH_GLYPHS.fazlaFlat
+    case 'bakiye_flat': return 'bs'
+    case 'kucuk_flat': return TURKISH_GLYPHS.kucukFlat
     case 'buyuk_flat': return 'b'
     case 'tanini_flat': return 'bb'
     default: return null
@@ -86,33 +119,45 @@ export function renderMeasures(
   startX: number,
   startY: number,
   staveWidth: number,
+  staveGap: number,
+  score: Score,
   timeSignature: [number, number],
+  makam: string,
+  measuresPerLine: number,
   selectedMeasure: number,
   selectedNote: number
-): { stavePositions: Array<{ x: number; y: number; width: number }> } {
-  const stavePositions: Array<{ x: number; y: number; width: number }> = []
-  const stavesPerLine = Math.max(1, Math.floor(900 / staveWidth))
+): { stavePositions: Array<{ x: number; y: number; width: number; noteStartX: number }> } {
+  const stavePositions: Array<{ x: number; y: number; width: number; noteStartX: number }> = []
   let x = startX
   let y = startY
+  const keySignature = buildMakamSignature(makam)
+  const sheetWidth = measuresPerLine * staveWidth + (measuresPerLine - 1) * staveGap
+
+  renderScoreHeader(context, score, startX, startY - 100, sheetWidth)
 
   for (let mi = 0; mi < measures.length; mi++) {
     const measure = measures[mi]
+    const isLineStart = mi % measuresPerLine === 0
 
-    // Wrap to next line
-    if (mi > 0 && mi % stavesPerLine === 0) {
+    if (mi > 0 && isLineStart) {
       x = startX
       y += 120
     }
 
     const stave = new Stave(x, y, staveWidth)
 
-    if (mi === 0) {
+    if (isLineStart) {
       stave.addClef('treble')
+      if (keySignature) {
+        stave.addModifier(keySignature())
+      }
+    }
+    if (mi === 0) {
       stave.addTimeSignature(`${timeSignature[0]}/${timeSignature[1]}`)
     }
 
     stave.setContext(context).draw()
-    stavePositions.push({ x, y, width: staveWidth })
+    stavePositions.push({ x, y, width: staveWidth, noteStartX: stave.getNoteStartX() })
 
     if (measure.notes.length > 0) {
       const staveNotes = measure.notes.map((note, ni) => {
@@ -131,12 +176,107 @@ export function renderMeasures(
 
       voice.addTickables(staveNotes)
 
-      new Formatter().joinVoices([voice]).format([voice], staveWidth - 50)
+      const formatWidth = Math.max(40, staveWidth - (isLineStart ? 120 : 40))
+      new Formatter().joinVoices([voice]).format([voice], formatWidth)
       voice.draw(context, stave)
     }
 
-    x += staveWidth
+    x += staveWidth + staveGap
   }
 
   return { stavePositions }
+}
+
+function renderScoreHeader(context: any, score: Score, x: number, y: number, width: number): void {
+  const metaColor = '#4b5563'
+  const titleColor = '#111827'
+  const leftMeta = [
+    score.makam ? `Makam: ${score.makam}` : '',
+    score.rhythm ? `Usul: ${getRhythmLabel(score.rhythm)}` : '',
+    score.timeSignature ? `Olcu: ${score.timeSignature[0]}/${score.timeSignature[1]}` : ''
+  ].filter(Boolean)
+  const rightMeta = [
+    score.composer ? `Beste: ${score.composer}` : '',
+    score.writer ? `Gufte: ${score.writer}` : ''
+  ].filter(Boolean)
+
+  context.save()
+  context.setFont('Arial', 12, '')
+  context.setFillStyle(metaColor)
+
+  leftMeta.forEach((line, index) => {
+    context.fillText(line, x, y + index * 16)
+  })
+
+  rightMeta.forEach((line, index) => {
+    const textWidth = measureTextWidth(context, line)
+    context.fillText(line, x + width - textWidth, y + index * 16)
+  })
+
+  if (score.title) {
+    context.setFont('Arial', 20, 'bold')
+    context.setFillStyle(titleColor)
+    const titleWidth = measureTextWidth(context, score.title)
+    context.fillText(score.title, x + (width - titleWidth) / 2, y + 18)
+  }
+
+  context.restore()
+}
+
+function measureTextWidth(context: any, text: string): number {
+  if (typeof context.measureText !== 'function') {
+    return text.length * 8
+  }
+
+  const measured = context.measureText(text)
+  if (typeof measured === 'number') return measured
+  if (typeof measured?.width === 'function') return measured.width()
+  if (typeof measured?.width === 'number') return measured.width
+  if (typeof measured?.w === 'number') return measured.w
+  return text.length * 8
+}
+
+function buildMakamSignature(makam: string): (() => CustomKeySignature) | null {
+  const signature = getMakamSignature(makam)
+  if (signature.length === 0) return null
+
+  const entries = signature
+    .map((entry) => {
+      const type = accidentalToVexFlow(entry.accidental)
+      const line = getSignatureLine(entry.natural, entry.accidental)
+      if (!type || line === null) return null
+      return { type, line }
+    })
+    .filter((entry): entry is { type: string; line: number } => entry !== null)
+
+  if (entries.length === 0) return null
+  return () => new CustomKeySignature(entries)
+}
+
+function getSignatureLine(natural: NaturalNote, accidental: AccidentalType): number | null {
+  if (accidental.includes('flat')) {
+    return {
+      B: 2,
+      E: 0.5,
+      A: 2.5,
+      D: 1,
+      G: 3,
+      C: 1.5,
+      F: 3.5
+    }[natural] ?? null
+  }
+
+  if (accidental.includes('sharp')) {
+    return {
+      F: 0,
+      C: 1.5,
+      G: -0.5,
+      D: 1,
+      A: 2.5,
+      E: 0.5,
+      B: 2
+    }[natural] ?? null
+  }
+
+  return null
 }

@@ -4,3 +4,4 @@ dist
 plan.txt
 
 *.tsbuildinfo
+*.pdf

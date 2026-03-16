@@ -1,3 +1,5 @@
+import { AccidentalType, NaturalNote } from '../types'
+
 /**
  * Makam (mode) definitions for Turkish classical music.
  * Each makam is defined by its ascending scale intervals in koma.
@@ -11,6 +13,11 @@ export interface MakamDef {
   intervals: number[]
   // Seyir (melodic progression) direction
   seyir: 'ascending' | 'descending' | 'mixed'
+}
+
+export interface MakamSignatureEntry {
+  natural: NaturalNote
+  accidental: AccidentalType
 }
 
 export const MAKAMLAR: MakamDef[] = [
@@ -88,6 +95,50 @@ export const MAKAMLAR: MakamDef[] = [
 
 export function getMakam(id: string): MakamDef | undefined {
   return MAKAMLAR.find((m) => m.id === id)
+}
+
+const MAKAM_SIGNATURES: Record<string, MakamSignatureEntry[]> = {
+  rast: [
+    { natural: 'B', accidental: 'fazla_flat' },
+    { natural: 'F', accidental: 'bakiye_sharp' }
+  ],
+  ussak: [
+    { natural: 'B', accidental: 'fazla_flat' }
+  ],
+  hicaz: [
+    { natural: 'B', accidental: 'bakiye_flat' },
+    { natural: 'C', accidental: 'bakiye_sharp' }
+  ],
+  segah: [
+    { natural: 'B', accidental: 'fazla_flat' },
+    { natural: 'F', accidental: 'bakiye_sharp' }
+  ],
+  huseyni: [
+    { natural: 'B', accidental: 'fazla_flat' },
+    { natural: 'F', accidental: 'bakiye_sharp' }
+  ],
+  kurdilihicazkar: [
+    { natural: 'B', accidental: 'kucuk_flat' },
+    { natural: 'E', accidental: 'kucuk_flat' }
+  ],
+  nihavend: [
+    { natural: 'B', accidental: 'kucuk_flat' },
+    { natural: 'E', accidental: 'kucuk_flat' }
+  ],
+  buselik: [],
+  karcigar: [
+    { natural: 'B', accidental: 'fazla_flat' },
+    { natural: 'E', accidental: 'bakiye_flat' },
+    { natural: 'F', accidental: 'bakiye_sharp' }
+  ],
+  saba: [
+    { natural: 'B', accidental: 'fazla_flat' },
+    { natural: 'D', accidental: 'bakiye_flat' }
+  ]
+}
+
+export function getMakamSignature(makamId: string): MakamSignatureEntry[] {
+  return MAKAM_SIGNATURES[makamId] ?? []
 }
 
 /**

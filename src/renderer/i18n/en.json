@@ -5,11 +5,18 @@
   },
   "menu": {
     "file": "File",
+    "edit": "Edit",
+    "view": "View",
     "new": "New",
     "open": "Open",
     "save": "Save",
     "saveAs": "Save As",
-    "importAudio": "Import Audio"
+    "importAudio": "Import Audio",
+    "showSidebar": "Show Sidebar",
+    "hideSidebar": "Hide Sidebar",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "resetZoom": "Reset Zoom"
   },
   "toolbar": {
     "duration": "Duration",
@@ -19,6 +26,8 @@
     "quarter": "Quarter",
     "eighth": "Eighth",
     "sixteenth": "Sixteenth",
+    "thirtySecond": "Thirty-second",
+    "sixtyFourth": "Sixty-fourth",
     "dotted": "Dotted",
     "rest": "Rest",
     "tie": "Tie",
@@ -64,7 +73,10 @@
   "score": {
     "title": "Title",
     "composer": "Composer",
+    "writer": "Writer",
     "makam": "Makam",
+    "rhythm": "Rhythm",
+    "measuresPerLine": "Measures/Line",
     "usul": "Usul",
     "tempo": "Tempo",
     "measure": "Measure",

@@ -13,7 +13,7 @@ export type AccidentalType =
   | 'buyuk_flat'      // -8 koma
   | 'tanini_flat'     // -9 koma
 
-export type Duration = '1' | '2' | '4' | '8' | '16'
+export type Duration = '1' | '2' | '4' | '8' | '16' | '32' | '64'
 
 export interface DikteNote {
   id: string
@@ -36,8 +36,11 @@ export interface Measure {
 export interface Score {
   title: string
   composer: string
+  writer: string
   makam: string
+  rhythm: string
   usul: string
+  measuresPerLine: number
   measures: Measure[]
   timeSignature: [number, number]
   tempo: number

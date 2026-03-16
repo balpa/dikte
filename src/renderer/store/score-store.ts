@@ -21,7 +21,7 @@ interface ScoreState {
   // Actions
   setScore: (score: Score) => void
   newScore: () => void
-  addNote: (note: DikteNote) => void
+  addNote: (note: DikteNote, insertAt?: number) => void
   updateNote: (measureIndex: number, noteIndex: number, note: Partial<DikteNote>) => void
   deleteNote: (measureIndex: number, noteIndex: number) => void
   setCursor: (measureIndex: number, noteIndex: number) => void
@@ -36,6 +36,8 @@ interface ScoreState {
   deserialize: (json: string) => void
 }
 
+const DEFAULT_STAFF_LINES = 8
+
 function createEmptyMeasure(): Measure {
   return {
     id: `m_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
@@ -43,13 +45,22 @@ function createEmptyMeasure(): Measure {
   }
 }
 
+function createDefaultMeasures(count: number): Measure[] {
+  return Array.from({ length: count }, () => createEmptyMeasure())
+}
+
 function createDefaultScore(): Score {
+  const measuresPerLine = 4
+
   return {
     title: '',
     composer: '',
+    writer: '',
     makam: 'rast',
+    rhythm: '',
     usul: '',
-    measures: [createEmptyMeasure()],
+    measuresPerLine,
+    measures: createDefaultMeasures(DEFAULT_STAFF_LINES * measuresPerLine),
     timeSignature: [4, 4],
     tempo: 80
   }
@@ -96,7 +107,7 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
     })
   },
 
-  addNote: (note) =>
+  addNote: (note, insertAt) =>
     set((state) => {
       const histUpdate = pushHistory(state)
       const measures = JSON.parse(JSON.stringify(state.score.measures)) as Measure[]
@@ -107,12 +118,17 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
         measures.push(createEmptyMeasure())
       }
 
-      measures[mi].notes.push(note)
+      const noteIndex =
+        typeof insertAt === 'number'
+          ? Math.max(0, Math.min(insertAt, measures[mi].notes.length))
+          : measures[mi].notes.length
+
+      measures[mi].notes.splice(noteIndex, 0, note)
 
       return {
         ...histUpdate,
         score: { ...state.score, measures },
-        currentNoteIndex: measures[mi].notes.length - 1
+        currentNoteIndex: noteIndex
       }
     }),
 
@@ -205,12 +221,24 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
 
   deserialize: (json) => {
     const file: DikteFile = JSON.parse(json)
+    const score: Score = {
+      ...file.score,
+      writer: file.score.writer ?? '',
+      rhythm: file.score.rhythm ?? file.score.usul ?? '',
+      usul: file.score.usul ?? file.score.rhythm ?? '',
+      measuresPerLine: Math.max(1, Math.min(8, file.score.measuresPerLine ?? 4)),
+      measures: file.score.measures?.length
+        ? file.score.measures
+        : createDefaultMeasures(
+            DEFAULT_STAFF_LINES * Math.max(1, Math.min(8, file.score.measuresPerLine ?? 4))
+          )
+    }
     set({
-      score: file.score,
+      score,
       currentMeasureIndex: 0,
       currentNoteIndex: 0,
       isDirty: false,
-      history: [{ measures: JSON.parse(JSON.stringify(file.score.measures)) }],
+      history: [{ measures: JSON.parse(JSON.stringify(score.measures)) }],
       historyIndex: 0
     })
   }

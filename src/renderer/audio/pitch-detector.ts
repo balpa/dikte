@@ -14,7 +14,7 @@ export class MicPitchDetector {
   private sourceNode: MediaStreamAudioSourceNode | null = null
   private stream: MediaStream | null = null
   private detector: PitchDetector<Float32Array> | null = null
-  private inputBuffer: Float32Array | null = null
+  private inputBuffer: Float32Array<ArrayBuffer> | null = null
   private running = false
   private onPitch: ((result: PitchResult | null) => void) | null = null
 
@@ -37,7 +37,9 @@ export class MicPitchDetector {
     this.sourceNode.connect(this.analyserNode)
 
     this.detector = PitchDetector.forFloat32Array(BUFFER_SIZE)
-    this.inputBuffer = new Float32Array(BUFFER_SIZE)
+    this.inputBuffer = new Float32Array(
+      new ArrayBuffer(BUFFER_SIZE * Float32Array.BYTES_PER_ELEMENT)
+    ) as Float32Array<ArrayBuffer>
     this.running = true
 
     this.loop()

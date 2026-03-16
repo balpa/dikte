@@ -1,19 +1,20 @@
 import { useCallback } from 'react'
 import { useScoreStore } from '../../store/score-store'
-import { createNote, createRest } from '../../core/pitch-to-note'
+import { createNote } from '../../core/pitch-to-note'
 import { NaturalNote } from '../../types'
 
 interface Props {
-  stavePositions: Array<{ x: number; y: number; width: number }>
+  stavePositions: Array<{ x: number; y: number; width: number; noteStartX: number }>
   staveWidth: number
   startY: number
 }
 
-// Staff line positions (from top): F5, D5, B4, G4, E4
-// Ledger lines above/below extend the range
-const STAFF_NOTES: NaturalNote[] = ['F', 'E', 'D', 'C', 'B', 'A', 'G', 'F', 'E', 'D', 'C']
-const STAFF_OCTAVES = [5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4]
-const LINE_SPACING = 10 // pixels between staff positions (line + space)
+// Treble staff positions from top line downward, including spaces and nearby ledger positions.
+const STAFF_NOTES: NaturalNote[] = ['F', 'E', 'D', 'C', 'B', 'A', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'G', 'F']
+const STAFF_OCTAVES = [5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3]
+const STAFF_TOP_OFFSET = 0
+const NOTE_STEP = 5
+const NOTE_END_PADDING = 20
 
 /**
  * Transparent overlay that handles click-to-place notes on the staff.
@@ -23,6 +24,7 @@ export function InteractionLayer({ stavePositions, staveWidth, startY }: Props) 
   const setCursor = useScoreStore((s) => s.setCursor)
   const selectedDuration = useScoreStore((s) => s.selectedDuration)
   const selectedAccidental = useScoreStore((s) => s.selectedAccidental)
+  const measures = useScoreStore((s) => s.score.measures)
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -48,23 +50,30 @@ export function InteractionLayer({ stavePositions, staveWidth, startY }: Props) 
       if (measureIndex === -1) return
 
       const stavePos = stavePositions[measureIndex]
+      const measure = measures[measureIndex]
 
-      // Determine pitch from Y position
-      // Top of staff (first line) is at stavePos.y
-      const staffTop = stavePos.y
+      const staffTop = stavePos.y + STAFF_TOP_OFFSET
       const relY = clickY - staffTop
-      const noteIndex = Math.round(relY / LINE_SPACING)
-      const clampedIndex = Math.max(0, Math.min(STAFF_NOTES.length - 1, noteIndex))
+      const pitchIndex = Math.round(relY / NOTE_STEP)
+      const clampedIndex = Math.max(0, Math.min(STAFF_NOTES.length - 1, pitchIndex))
 
       const natural = STAFF_NOTES[clampedIndex]
       const octave = STAFF_OCTAVES[clampedIndex]
+      const noteAreaStart = stavePos.noteStartX
+      const noteAreaWidth = Math.max(40, stavePos.x + staveWidth - noteAreaStart - NOTE_END_PADDING)
+      const slotCount = Math.max(1, measure.notes.length + 1)
+      const relativeX = Math.max(0, Math.min(noteAreaWidth, clickX - noteAreaStart))
+      const insertIndex = Math.max(
+        0,
+        Math.min(measure.notes.length, Math.round((relativeX / noteAreaWidth) * slotCount))
+      )
 
-      setCursor(measureIndex, -1)
+      setCursor(measureIndex, insertIndex)
 
       const note = createNote(natural, octave, selectedAccidental, selectedDuration)
-      addNote(note)
+      addNote(note, insertIndex)
     },
-    [stavePositions, selectedDuration, selectedAccidental, addNote, setCursor]
+    [stavePositions, measures, staveWidth, selectedDuration, selectedAccidental, addNote, setCursor]
   )
 
   return (

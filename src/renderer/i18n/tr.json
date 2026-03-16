@@ -5,11 +5,18 @@
   },
   "menu": {
     "file": "Dosya",
+    "edit": "Düzen",
+    "view": "Görünüm",
     "new": "Yeni",
     "open": "Aç",
     "save": "Kaydet",
     "saveAs": "Farklı Kaydet",
-    "importAudio": "Ses Dosyası İçe Aktar"
+    "importAudio": "Ses Dosyası İçe Aktar",
+    "showSidebar": "Kenarı Göster",
+    "hideSidebar": "Kenarı Gizle",
+    "zoomIn": "Yakınlaştır",
+    "zoomOut": "Uzaklaştır",
+    "resetZoom": "Yakınlığı Sıfırla"
   },
   "toolbar": {
     "duration": "Nota Süresi",
@@ -19,6 +26,8 @@
     "quarter": "Dörtlük",
     "eighth": "Sekizlik",
     "sixteenth": "Onaltılık",
+    "thirtySecond": "Otuzikilik",
+    "sixtyFourth": "Altmışdörtlük",
     "dotted": "Noktalı",
     "rest": "Sus",
     "tie": "Bağ",
@@ -64,7 +73,10 @@
   "score": {
     "title": "Eser Adı",
     "composer": "Besteci",
+    "writer": "Güfte/Yazar",
     "makam": "Makam",
+    "rhythm": "Ritim",
+    "measuresPerLine": "Satır/Ölçü",
     "usul": "Usûl",
     "tempo": "Tempo",
     "measure": "Ölçü",

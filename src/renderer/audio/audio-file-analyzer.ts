@@ -22,7 +22,9 @@ function estimateDuration(seconds: number, tempo: number): Duration {
   if (beats >= 1.5) return '2'
   if (beats >= 0.75) return '4'
   if (beats >= 0.375) return '8'
-  return '16'
+  if (beats >= 0.1875) return '16'
+  if (beats >= 0.09375) return '32'
+  return '64'
 }
 
 /**

@@ -1,9 +1,42 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StaffCanvas } from './components/staff/StaffCanvas'
 import { Sidebar } from './components/sidebar/Sidebar'
 import { Modal } from './components/common/Modal'
 import { useScoreStore } from './store/score-store'
+import { MAKAMLAR } from './core/makam'
+import { RHYTHM_OPTIONS, getRhythmOption } from './core/rhythm'
+
+function HeaderButton({
+  label,
+  onClick
+}: {
+  label: string
+  onClick: () => void
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
+      style={{
+        background: 'rgba(255,255,255,0.04)',
+        color: '#a1a1a6',
+        border: '1px solid rgba(255,255,255,0.06)'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = 'rgba(255,255,255,0.08)'
+        e.currentTarget.style.color = '#f5f5f7'
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = 'rgba(255,255,255,0.04)'
+        e.currentTarget.style.color = '#a1a1a6'
+      }}
+    >
+      {label}
+    </button>
+  )
+}
 
 export default function App() {
   const { t } = useTranslation()
@@ -26,6 +59,17 @@ export default function App() {
   const deleteNote = useScoreStore((s) => s.deleteNote)
   const currentMeasureIndex = useScoreStore((s) => s.currentMeasureIndex)
   const currentNoteIndex = useScoreStore((s) => s.currentNoteIndex)
+
+  const updateScore = useCallback(
+    (updates: Partial<typeof score>) => {
+      const nextScore = { ...score, ...updates }
+      if (updates.rhythm !== undefined && updates.usul === undefined) {
+        nextScore.usul = updates.rhythm
+      }
+      setScore(nextScore)
+    },
+    [score, setScore]
+  )
 
   const confirmIfDirty = useCallback(
     (action: () => void) => {
@@ -87,7 +131,17 @@ export default function App() {
       window.api.onMenuDeleteNote(() => deleteNote(currentMeasureIndex, currentNoteIndex))
     ]
     return () => cleanups.forEach((fn) => fn())
-  }, [handleNew, handleOpen, handleSave, handleSaveAs, undo, redo, deleteNote, currentMeasureIndex, currentNoteIndex])
+  }, [
+    handleNew,
+    handleOpen,
+    handleSave,
+    handleSaveAs,
+    undo,
+    redo,
+    deleteNote,
+    currentMeasureIndex,
+    currentNoteIndex
+  ])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -101,54 +155,143 @@ export default function App() {
 
   return (
     <div className="h-screen flex" style={{ background: '#1c1c1e' }}>
-      {/* Left Sidebar */}
       <Sidebar />
 
-      {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0">
-        {/* Top bar */}
         <header
-          className="h-12 flex items-center justify-between px-6 border-b"
+          className="min-h-14 flex items-center justify-between px-6 py-2 border-b gap-6"
           style={{ background: '#2c2c2e', borderColor: 'rgba(255,255,255,0.06)' }}
         >
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap">
             <span className="text-xs font-semibold tracking-widest" style={{ color: '#86868b' }}>
               DIKTE
             </span>
             <span style={{ color: 'rgba(255,255,255,0.1)' }}>/</span>
+            <div className="flex items-center gap-2">
+              <HeaderButton label={t('menu.file')} onClick={handleNew} />
+              <HeaderButton label={t('menu.edit')} onClick={undo} />
+              <HeaderButton label={t('menu.view')} onClick={redo} />
+            </div>
+            {isDirty && <div className="w-2 h-2 rounded-full" style={{ background: '#ff9f0a' }} />}
+          </div>
+
+          <div className="flex items-center gap-3 flex-wrap justify-end">
             <input
               type="text"
               value={score.title}
-              onChange={(e) => setScore({ ...score, title: e.target.value })}
+              onChange={(e) => updateScore({ title: e.target.value })}
               placeholder={t('score.title')}
-              className="text-sm bg-transparent outline-none w-40"
-              style={{ color: '#f5f5f7', caretColor: '#0a84ff' }}
+              className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-40"
+              style={{
+                color: '#f5f5f7',
+                caretColor: '#0a84ff',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}
             />
-            <span style={{ color: 'rgba(255,255,255,0.08)' }}>|</span>
             <input
               type="text"
               value={score.composer}
-              onChange={(e) => setScore({ ...score, composer: e.target.value })}
+              onChange={(e) => updateScore({ composer: e.target.value })}
               placeholder={t('score.composer')}
-              className="text-sm bg-transparent outline-none w-36"
-              style={{ color: '#86868b', caretColor: '#0a84ff' }}
+              className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-36"
+              style={{
+                color: '#f5f5f7',
+                caretColor: '#0a84ff',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}
             />
-            {isDirty && (
-              <div className="w-2 h-2 rounded-full" style={{ background: '#ff9f0a' }} />
-            )}
+            <input
+              type="text"
+              value={score.writer}
+              onChange={(e) => updateScore({ writer: e.target.value })}
+              placeholder={t('score.writer')}
+              className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-36"
+              style={{
+                color: '#f5f5f7',
+                caretColor: '#0a84ff',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}
+            />
+            <select
+              value={score.rhythm}
+              onChange={(e) => {
+                const rhythm = getRhythmOption(e.target.value)
+                updateScore({
+                  rhythm: e.target.value,
+                  usul: rhythm?.label ?? e.target.value,
+                  timeSignature: rhythm?.timeSignature ?? score.timeSignature
+                })
+              }}
+              className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-32 appearance-none"
+              style={{
+                color: '#f5f5f7',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}
+            >
+              <option value="" style={{ background: '#2c2c2e', color: '#f5f5f7' }}>
+                {t('score.rhythm')}
+              </option>
+              {RHYTHM_OPTIONS.map((option) => (
+                <option
+                  key={option.id}
+                  value={option.id}
+                  style={{ background: '#2c2c2e', color: '#f5f5f7' }}
+                >
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <select
+              value={score.makam}
+              onChange={(e) => updateScore({ makam: e.target.value })}
+              className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-28 appearance-none"
+              style={{
+                color: '#f5f5f7',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}
+            >
+              {MAKAMLAR.map((option) => (
+                <option
+                  key={option.id}
+                  value={option.id}
+                  style={{ background: '#2c2c2e', color: '#f5f5f7' }}
+                >
+                  {t(`makam.${option.id}`)}
+                </option>
+              ))}
+            </select>
+            <input
+              type="number"
+              min={1}
+              max={8}
+              value={score.measuresPerLine}
+              onChange={(e) =>
+                updateScore({
+                  measuresPerLine: Math.max(1, Math.min(8, Number(e.target.value) || 4))
+                })
+              }
+              placeholder={t('score.measuresPerLine')}
+              className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-24"
+              style={{
+                color: '#f5f5f7',
+                caretColor: '#0a84ff',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}
+            />
           </div>
         </header>
 
-        {/* Staff Area */}
-        <div
-          className="flex-1 overflow-auto content-scroll p-8"
-          style={{ background: '#1c1c1e' }}
-        >
+        <div className="flex-1 overflow-auto content-scroll p-8" style={{ background: '#1c1c1e' }}>
           <StaffCanvas />
         </div>
       </main>
 
-      {/* Confirm modal */}
       <Modal
         open={confirmModal.open}
         message={t('common.unsavedChanges')}
