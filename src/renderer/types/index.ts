@@ -34,9 +34,12 @@ export interface Measure {
 }
 
 export interface Score {
+  genre: string
   title: string
+  subtitle: string
   composer: string
   writer: string
+  source: string
   makam: string
   rhythm: string
   usul: string

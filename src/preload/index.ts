@@ -40,6 +40,18 @@ const api = {
   onMenuDeleteNote: (callback: () => void) => {
     ipcRenderer.on('menu:deleteNote', callback)
     return () => ipcRenderer.removeListener('menu:deleteNote', callback)
+  },
+  onMenuZoomIn: (callback: () => void) => {
+    ipcRenderer.on('menu:zoomIn', callback)
+    return () => ipcRenderer.removeListener('menu:zoomIn', callback)
+  },
+  onMenuZoomOut: (callback: () => void) => {
+    ipcRenderer.on('menu:zoomOut', callback)
+    return () => ipcRenderer.removeListener('menu:zoomOut', callback)
+  },
+  onMenuResetZoom: (callback: () => void) => {
+    ipcRenderer.on('menu:resetZoom', callback)
+    return () => ipcRenderer.removeListener('menu:resetZoom', callback)
   }
 }
 

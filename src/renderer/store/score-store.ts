@@ -11,6 +11,7 @@ interface ScoreState {
   currentNoteIndex: number
   selectedDuration: Duration
   selectedAccidental: AccidentalType
+  pageZoom: number
   filePath: string | null
   isDirty: boolean
 
@@ -27,6 +28,10 @@ interface ScoreState {
   setCursor: (measureIndex: number, noteIndex: number) => void
   setSelectedDuration: (duration: Duration) => void
   setSelectedAccidental: (accidental: AccidentalType) => void
+  setPageZoom: (zoom: number) => void
+  zoomIn: () => void
+  zoomOut: () => void
+  resetZoom: () => void
   addMeasure: () => void
   setFilePath: (path: string | null) => void
   setDirty: (dirty: boolean) => void
@@ -53,9 +58,12 @@ function createDefaultScore(): Score {
   const measuresPerLine = 4
 
   return {
+    genre: '',
     title: '',
+    subtitle: '',
     composer: '',
     writer: '',
+    source: '',
     makam: 'rast',
     rhythm: '',
     usul: '',
@@ -87,6 +95,7 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
   currentNoteIndex: 0,
   selectedDuration: '4',
   selectedAccidental: 'none',
+  pageZoom: 1,
   filePath: null,
   isDirty: false,
   history: [{ measures: createDefaultScore().measures }],
@@ -164,6 +173,10 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
 
   setSelectedDuration: (duration) => set({ selectedDuration: duration }),
   setSelectedAccidental: (accidental) => set({ selectedAccidental: accidental }),
+  setPageZoom: (zoom) => set({ pageZoom: Math.max(0.5, Math.min(2, zoom)) }),
+  zoomIn: () => set((state) => ({ pageZoom: Math.min(2, Number((state.pageZoom + 0.1).toFixed(2))) })),
+  zoomOut: () => set((state) => ({ pageZoom: Math.max(0.5, Number((state.pageZoom - 0.1).toFixed(2))) })),
+  resetZoom: () => set({ pageZoom: 1 }),
 
   addMeasure: () =>
     set((state) => {
@@ -223,7 +236,10 @@ export const useScoreStore = create<ScoreState>((set, get) => ({
     const file: DikteFile = JSON.parse(json)
     const score: Score = {
       ...file.score,
+      genre: file.score.genre ?? '',
+      subtitle: file.score.subtitle ?? '',
       writer: file.score.writer ?? '',
+      source: file.score.source ?? '',
       rhythm: file.score.rhythm ?? file.score.usul ?? '',
       usul: file.score.usul ?? file.score.rhythm ?? '',
       measuresPerLine: Math.max(1, Math.min(8, file.score.measuresPerLine ?? 4)),

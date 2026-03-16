@@ -56,6 +56,11 @@ export default function App() {
   const deserialize = useScoreStore((s) => s.deserialize)
   const undo = useScoreStore((s) => s.undo)
   const redo = useScoreStore((s) => s.redo)
+  const pageZoom = useScoreStore((s) => s.pageZoom)
+  const setPageZoom = useScoreStore((s) => s.setPageZoom)
+  const zoomIn = useScoreStore((s) => s.zoomIn)
+  const zoomOut = useScoreStore((s) => s.zoomOut)
+  const resetZoom = useScoreStore((s) => s.resetZoom)
   const deleteNote = useScoreStore((s) => s.deleteNote)
   const currentMeasureIndex = useScoreStore((s) => s.currentMeasureIndex)
   const currentNoteIndex = useScoreStore((s) => s.currentNoteIndex)
@@ -128,7 +133,10 @@ export default function App() {
       window.api.onMenuSaveAs(handleSaveAs),
       window.api.onMenuUndo(undo),
       window.api.onMenuRedo(redo),
-      window.api.onMenuDeleteNote(() => deleteNote(currentMeasureIndex, currentNoteIndex))
+      window.api.onMenuDeleteNote(() => deleteNote(currentMeasureIndex, currentNoteIndex)),
+      window.api.onMenuZoomIn(zoomIn),
+      window.api.onMenuZoomOut(zoomOut),
+      window.api.onMenuResetZoom(resetZoom)
     ]
     return () => cleanups.forEach((fn) => fn())
   }, [
@@ -138,6 +146,9 @@ export default function App() {
     handleSaveAs,
     undo,
     redo,
+    zoomIn,
+    zoomOut,
+    resetZoom,
     deleteNote,
     currentMeasureIndex,
     currentNoteIndex
@@ -170,7 +181,7 @@ export default function App() {
             <div className="flex items-center gap-2">
               <HeaderButton label={t('menu.file')} onClick={handleNew} />
               <HeaderButton label={t('menu.edit')} onClick={undo} />
-              <HeaderButton label={t('menu.view')} onClick={redo} />
+              <HeaderButton label={t('menu.view')} onClick={resetZoom} />
             </div>
             {isDirty && <div className="w-2 h-2 rounded-full" style={{ background: '#ff9f0a' }} />}
           </div>
@@ -178,10 +189,36 @@ export default function App() {
           <div className="flex items-center gap-3 flex-wrap justify-end">
             <input
               type="text"
+              value={score.genre}
+              onChange={(e) => updateScore({ genre: e.target.value })}
+              placeholder={t('score.genre')}
+              className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-32"
+              style={{
+                color: '#f5f5f7',
+                caretColor: '#0a84ff',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}
+            />
+            <input
+              type="text"
               value={score.title}
               onChange={(e) => updateScore({ title: e.target.value })}
               placeholder={t('score.title')}
               className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-40"
+              style={{
+                color: '#f5f5f7',
+                caretColor: '#0a84ff',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}
+            />
+            <input
+              type="text"
+              value={score.subtitle}
+              onChange={(e) => updateScore({ subtitle: e.target.value })}
+              placeholder={t('score.subtitle')}
+              className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-32"
               style={{
                 color: '#f5f5f7',
                 caretColor: '#0a84ff',
@@ -207,6 +244,19 @@ export default function App() {
               value={score.writer}
               onChange={(e) => updateScore({ writer: e.target.value })}
               placeholder={t('score.writer')}
+              className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-36"
+              style={{
+                color: '#f5f5f7',
+                caretColor: '#0a84ff',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}
+            />
+            <input
+              type="text"
+              value={score.source}
+              onChange={(e) => updateScore({ source: e.target.value })}
+              placeholder={t('score.source')}
               className="text-sm bg-transparent outline-none rounded-lg px-3 py-1.5 w-36"
               style={{
                 color: '#f5f5f7',
@@ -284,6 +334,42 @@ export default function App() {
                 border: '1px solid rgba(255,255,255,0.06)'
               }}
             />
+            <div
+              className="flex items-center rounded-lg overflow-hidden"
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}
+            >
+              <button
+                type="button"
+                onClick={zoomOut}
+                className="px-3 py-1.5 text-sm"
+                style={{ color: '#f5f5f7' }}
+              >
+                -
+              </button>
+              <input
+                type="number"
+                min={50}
+                max={200}
+                step={10}
+                value={Math.round(pageZoom * 100)}
+                onChange={(e) => setPageZoom((Number(e.target.value) || 100) / 100)}
+                className="text-sm bg-transparent outline-none w-16 text-center"
+                style={{ color: '#f5f5f7', caretColor: '#0a84ff' }}
+                aria-label={t('menu.view')}
+              />
+              <span className="text-sm pr-2" style={{ color: '#a1a1a6' }}>%</span>
+              <button
+                type="button"
+                onClick={zoomIn}
+                className="px-3 py-1.5 text-sm"
+                style={{ color: '#f5f5f7' }}
+              >
+                +
+              </button>
+            </div>
           </div>
         </header>
 

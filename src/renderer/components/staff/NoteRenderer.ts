@@ -126,8 +126,24 @@ export function renderMeasures(
   measuresPerLine: number,
   selectedMeasure: number,
   selectedNote: number
-): { stavePositions: Array<{ x: number; y: number; width: number; noteStartX: number }> } {
-  const stavePositions: Array<{ x: number; y: number; width: number; noteStartX: number }> = []
+): {
+  stavePositions: Array<{
+    x: number
+    y: number
+    width: number
+    noteStartX: number
+    topLineY: number
+    lineSpacing: number
+  }>
+} {
+  const stavePositions: Array<{
+    x: number
+    y: number
+    width: number
+    noteStartX: number
+    topLineY: number
+    lineSpacing: number
+  }> = []
   let x = startX
   let y = startY
   const keySignature = buildMakamSignature(makam)
@@ -157,7 +173,14 @@ export function renderMeasures(
     }
 
     stave.setContext(context).draw()
-    stavePositions.push({ x, y, width: staveWidth, noteStartX: stave.getNoteStartX() })
+    stavePositions.push({
+      x,
+      y,
+      width: staveWidth,
+      noteStartX: stave.getNoteStartX(),
+      topLineY: stave.getYForLine(0),
+      lineSpacing: stave.getSpacingBetweenLines()
+    })
 
     if (measure.notes.length > 0) {
       const staveNotes = measure.notes.map((note, ni) => {
@@ -188,36 +211,51 @@ export function renderMeasures(
 }
 
 function renderScoreHeader(context: any, score: Score, x: number, y: number, width: number): void {
-  const metaColor = '#4b5563'
+  const metaColor = '#374151'
   const titleColor = '#111827'
   const leftMeta = [
-    score.makam ? `Makam: ${score.makam}` : '',
-    score.rhythm ? `Usul: ${getRhythmLabel(score.rhythm)}` : '',
-    score.timeSignature ? `Olcu: ${score.timeSignature[0]}/${score.timeSignature[1]}` : ''
+    score.rhythm ? `Usul: ${getRhythmLabel(score.rhythm)}` : ''
   ].filter(Boolean)
   const rightMeta = [
     score.composer ? `Beste: ${score.composer}` : '',
-    score.writer ? `Gufte: ${score.writer}` : ''
+    score.writer ? `Gufte: ${score.writer}` : '',
+    score.source ? `Kaynak: ${score.source}` : ''
   ].filter(Boolean)
 
   context.save()
-  context.setFont('Arial', 12, '')
+  context.setFont('Arial', 13, 'italic')
   context.setFillStyle(metaColor)
 
   leftMeta.forEach((line, index) => {
-    context.fillText(line, x, y + index * 16)
+    context.fillText(line, x, y + 40 + index * 18)
   })
 
   rightMeta.forEach((line, index) => {
     const textWidth = measureTextWidth(context, line)
-    context.fillText(line, x + width - textWidth, y + index * 16)
+    context.fillText(line, x + width - textWidth, y + 30 + index * 18)
   })
 
+  const headerTitle = score.genre || score.makam
+
+  if (headerTitle) {
+    context.setFont('Arial', 18, 'bold italic')
+    context.setFillStyle(titleColor)
+    const genreWidth = measureTextWidth(context, headerTitle)
+    context.fillText(headerTitle, x + (width - genreWidth) / 2, y + 18)
+  }
+
   if (score.title) {
-    context.setFont('Arial', 20, 'bold')
+    context.setFont('Arial', 16, 'bold italic')
     context.setFillStyle(titleColor)
     const titleWidth = measureTextWidth(context, score.title)
-    context.fillText(score.title, x + (width - titleWidth) / 2, y + 18)
+    context.fillText(score.title, x + (width - titleWidth) / 2, y + 38)
+  }
+
+  if (score.subtitle) {
+    context.setFont('Arial', 12, 'italic')
+    context.setFillStyle(metaColor)
+    const subtitleWidth = measureTextWidth(context, score.subtitle)
+    context.fillText(score.subtitle, x + (width - subtitleWidth) / 2, y + 56)
   }
 
   context.restore()

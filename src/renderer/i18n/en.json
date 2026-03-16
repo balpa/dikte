@@ -40,13 +40,13 @@
     "none": "Natural",
     "fazla_sharp": "Fazla Sharp (+1)",
     "bakiye_sharp": "Bakiye Sharp (+4)",
-    "kucuk_sharp": "Kücük Müc. Sharp (+5)",
-    "buyuk_sharp": "Büyük Müc. Sharp (+8)",
+    "kucuk_sharp": "Kucuk Mucennep Sharp (+5)",
+    "buyuk_sharp": "Buyuk Mucennep Sharp (+8)",
     "tanini_sharp": "Tanini Sharp (+9)",
     "fazla_flat": "Fazla Flat (-1)",
     "bakiye_flat": "Bakiye Flat (-4)",
-    "kucuk_flat": "Kücük Müc. Flat (-5)",
-    "buyuk_flat": "Büyük Müc. Flat (-8)",
+    "kucuk_flat": "Kucuk Mucennep Flat (-5)",
+    "buyuk_flat": "Buyuk Mucennep Flat (-8)",
     "tanini_flat": "Tanini Flat (-9)"
   },
   "notes": {
@@ -71,9 +71,12 @@
     "noMicAccess": "Could not access microphone"
   },
   "score": {
+    "genre": "Header",
     "title": "Title",
+    "subtitle": "Subtitle",
     "composer": "Composer",
     "writer": "Writer",
+    "source": "Source",
     "makam": "Makam",
     "rhythm": "Rhythm",
     "measuresPerLine": "Measures/Line",
@@ -84,15 +87,15 @@
   },
   "makam": {
     "rast": "Rast",
-    "ussak": "Uşşak",
+    "ussak": "Ussak",
     "hicaz": "Hicaz",
-    "segah": "Segâh",
-    "huseyni": "Hüseyni",
-    "kurdilihicazkar": "Kürdilihicazkâr",
+    "segah": "Segah",
+    "huseyni": "Huseyni",
+    "kurdilihicazkar": "Kurdilihicazkar",
     "nihavend": "Nihavend",
     "buselik": "Buselik",
-    "karcigar": "Karcığar",
-    "saba": "Sabâ"
+    "karcigar": "Karcigar",
+    "saba": "Saba"
   },
   "common": {
     "language": "Language",
