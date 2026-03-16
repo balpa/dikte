@@ -13,7 +13,7 @@ const PAGE_MAX_WIDTH = 1280
 export function StaffCanvas() {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<HTMLDivElement>(null)
-  const stavePositionsRef = useRef<
+  const [stavePositions, setStavePositions] = useState<
     Array<{
       x: number
       y: number
@@ -74,7 +74,7 @@ export function StaffCanvas() {
       measureError
     )
 
-    stavePositionsRef.current = result.stavePositions
+    setStavePositions(result.stavePositions)
   }, [
     currentMeasureIndex,
     currentNoteIndex,
@@ -131,7 +131,7 @@ export function StaffCanvas() {
         >
           <div ref={svgRef} style={{ width: `${pageWidth}px`, height: `${pageHeight}px` }} />
           <InteractionLayer
-            stavePositions={stavePositionsRef.current}
+            stavePositions={stavePositions}
             staveWidth={staveWidth}
             startY={START_Y}
             scale={scale}
